@@ -7,7 +7,9 @@ import Feedback from "@feedbackfarm/react";
 function App() {
   return (
     <div className="App">
-      <span>Give Feedback</span>
+      <Feedback>
+        <span>Give Feedback</span>
+      </Feedback>
     </div>
   );
 }
