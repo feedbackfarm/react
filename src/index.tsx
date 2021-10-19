@@ -1,7 +1,5 @@
-import React from "react";
+import * as React from "react";
 
-const SayHello = ({ name }: { name: string }): JSX.Element => (
-  <div>Hey {name}, say hello to TypeScript.</div>
-);
-
-export default SayHello;
+export default function () {
+  return <div>Salut toi2</div>;
+}

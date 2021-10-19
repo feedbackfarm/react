@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["../src/index.tsx"],"sourcesContent":["import * as React from \"react\";\n\nexport default function () {\n  return <div>Salut toi2</div>;\n}\n"],"names":["React"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAGE,OAAOA,yDAAqB,CAAC;AAC/B;;;;"}

@@ -1,13 +1,12 @@
 {
-  "name": "react",
+  "name": "@feedbackfarm/react",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
+    "build": "rollup -c",
+    "start": "rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -22,10 +21,18 @@
   "devDependencies": {
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "rollup": "^2.58.0",
+    "rollup-plugin-sass": "^1.2.9",
+    "rollup-plugin-typescript2": "^0.30.0",
     "typescript": "^4.4.4"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react-dom": "^17.0.2",
     "react": "^17.0.2"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
