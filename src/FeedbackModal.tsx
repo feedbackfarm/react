@@ -1,18 +1,56 @@
 import * as React from "react";
 
 type Props = {
+  projectId: string;
+  identifier?: string;
   onClose: () => void;
 };
 export default function FeedbackModal(props: Props) {
   const [feedback, setFeedback] = React.useState("");
+  const [showSpinner, setShowSpinner] = React.useState(false);
+  const [modalTitle, setModalTitle] = React.useState("Give feedback!");
+  const [feedbackButtonText, setFeedbackButtonText] =
+    React.useState("Send Feedback");
+  const [state, setState] = React.useState<"ask" | "conclusion">("ask");
 
   function handleSubmitFeedback() {
+    if (state === "conclusion") {
+      setFeedback("");
+      setShowSpinner(false);
+      setState("ask");
+      setModalTitle("Give feedback!");
+      setFeedbackButtonText("Send Feedback");
+      return;
+    }
+
     if (!feedback) {
       return;
     }
 
-    alert("Send");
+    setShowSpinner(true);
+    setState("conclusion");
+    setModalTitle("Thank you!");
+    setFeedbackButtonText("Another thing to say?");
+
+    setShowSpinner(false);
   }
+
+  function handleKeyDown(event: any) {
+    if (event.key === "Enter" && event.metaKey) {
+      handleSubmitFeedback();
+    }
+  }
+
+  const spin = `\
+   
+       100% { -moz-transform: rotate(360deg); } 
+       100% { -webkit-transform: rotate(360deg); } 
+       100% { 
+           -webkit-transform: rotate(360deg); 
+           transform:rotate(360deg); 
+       } 
+   }
+   `;
 
   return (
     <div
@@ -40,7 +78,7 @@ export default function FeedbackModal(props: Props) {
           alignItems: "center",
         }}
       >
-        <p style={{ margin: 0, color: "black" }}>Give Feedback!</p>
+        <p style={{ margin: 0, color: "black" }}>{modalTitle}</p>
         <button
           style={{
             width: 20,
@@ -68,23 +106,40 @@ export default function FeedbackModal(props: Props) {
         </button>
       </div>
 
-      <textarea
-        placeholder="I really ..."
-        style={{
-          marginTop: 12,
-          borderRadius: 7,
-          fontSize: 14,
-          resize: "none",
-          height: 55,
-          color: "black",
-          backgroundColor: "white",
-          borderColor: "rgba(51,51,51,0.2)",
-          wordBreak: "break-word",
-          padding: 10,
-          fontFamily: "helvetica, arial",
-        }}
-        onChange={(e) => setFeedback(e.target.value)}
-      ></textarea>
+      {state === "ask" && (
+        <textarea
+          autoFocus
+          placeholder="I really ..."
+          style={{
+            marginTop: 12,
+            borderRadius: 7,
+            fontSize: 14,
+            resize: "none",
+            height: 55,
+            color: "black",
+            backgroundColor: "white",
+            borderColor: "rgba(51,51,51,0.2)",
+            wordBreak: "break-word",
+            padding: 10,
+            fontFamily: "helvetica, arial",
+          }}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setFeedback(e.target.value)}
+        ></textarea>
+      )}
+
+      {state === "conclusion" && (
+        <p
+          style={{
+            marginTop: 16,
+            marginBottom: 16,
+            color: "black",
+            textAlign: "left",
+          }}
+        >
+          Your feedback has been received!
+        </p>
+      )}
       {/* Footer */}
       <div style={{ display: "flex", flexDirection: "column" }}>
         <button
@@ -102,11 +157,49 @@ export default function FeedbackModal(props: Props) {
             justifyContent: "center",
             fontFamily: "helvetica, arial",
             border: 0,
+            height: 35,
           }}
           onClick={handleSubmitFeedback}
         >
-          Send Feedback
+          {feedbackButtonText}
+          {showSpinner && (
+            <div
+              style={{
+                paddingTop: 2,
+                paddingBottom: 2,
+                marginLeft: 10,
+              }}
+            >
+              <div
+                style={{
+                  border: "10px solid #f3f3f3",
+                  borderTop: "10px solid #0da67d",
+                  borderRadius: "50%",
+                  WebkitAnimation: `${spin} 4s linear infinite`,
+                  animation: `${spin} 4s linear infinite`,
+                }}
+              ></div>
+            </div>
+          )}
         </button>
+        <span
+          style={{
+            fontSize: 12,
+            fontFamily: "helvetica, arial",
+            textAlign: "center",
+            marginTop: 12,
+            color: "rgb(174,174,174)",
+          }}
+        >
+          Powered by{" "}
+          <a
+            href="https://feedback.farm"
+            target="_blank"
+            style={{ color: "rgb(13,166,125)", textDecoration: "none" }}
+          >
+            feedback.farm
+          </a>
+        </span>
       </div>
     </div>
   );
