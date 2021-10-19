@@ -1,6 +1,6 @@
 import sass from "rollup-plugin-sass";
 import typescript from "rollup-plugin-typescript2";
-
+import css from "rollup-plugin-import-css";
 const packageJson = require("./package.json");
 
 export default {
@@ -17,6 +17,7 @@ export default {
   plugins: [
     sass({ insert: true }),
     typescript({ objectHashIgnoreUnknownHack: true }),
+    css(),
   ],
   external: ["react", "react-dom"],
 };

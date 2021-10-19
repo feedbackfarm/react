@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/feedbackfarm/react#readme",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.5",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
     "babel-core": "^6.26.3",
@@ -39,6 +40,7 @@
     "@feedbackfarm/core": "^1.0.5",
     "@popperjs/core": "^2.10.2",
     "react-popper": "^2.2.5",
-    "react-tether": "^2.0.8"
+    "react-tether": "^2.0.8",
+    "rollup-plugin-import-css": "^3.0.2"
   }
 }

@@ -25,7 +25,7 @@ function useOutsideAlerter(ref: any, onClose: () => void) {
 }
 
 function FeedbackFarm(props: Props) {
-  const [visible, setVisibility] = React.useState(true);
+  const [visible, setVisibility] = React.useState(false);
 
   const [referenceRef, setReferenceRef] = React.useState(null);
   const [popperRef, setPopperRef] = React.useState(null);
