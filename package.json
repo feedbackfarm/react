@@ -36,6 +36,7 @@
     "dist"
   ],
   "dependencies": {
+    "@feedbackfarm/core": "^1.0.5",
     "@popperjs/core": "^2.10.2",
     "react-popper": "^2.2.5",
     "react-tether": "^2.0.8"

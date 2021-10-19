@@ -1,4 +1,5 @@
 import * as React from "react";
+import { sendFeedback } from "@feedbackfarm/core";
 
 type Props = {
   projectId: string;
@@ -12,27 +13,43 @@ export default function FeedbackModal(props: Props) {
   const [feedbackButtonText, setFeedbackButtonText] =
     React.useState("Send Feedback");
   const [state, setState] = React.useState<"ask" | "conclusion">("ask");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  function handleSubmitFeedback() {
-    if (state === "conclusion") {
-      setFeedback("");
+  async function handleSubmitFeedback() {
+    try {
+      if (state === "conclusion") {
+        setFeedback("");
+        setShowSpinner(false);
+        setState("ask");
+        setModalTitle("Give feedback!");
+        setFeedbackButtonText("Send Feedback");
+        return;
+      }
+
+      if (!feedback || isLoading) {
+        return;
+      }
+
+      setIsLoading(true);
+      const result = await sendFeedback(
+        props.projectId,
+        feedback,
+        props.identifier
+      );
+      if (result.status !== 200) {
+        throw new Error(result.statusText);
+      }
+
+      setShowSpinner(true);
+      setState("conclusion");
+      setModalTitle("Thank you!");
+      setFeedbackButtonText("Another thing to say?");
+
       setShowSpinner(false);
-      setState("ask");
-      setModalTitle("Give feedback!");
-      setFeedbackButtonText("Send Feedback");
-      return;
+      setIsLoading(false);
+    } catch (error) {
+      alert("An error occured, try again.");
     }
-
-    if (!feedback) {
-      return;
-    }
-
-    setShowSpinner(true);
-    setState("conclusion");
-    setModalTitle("Thank you!");
-    setFeedbackButtonText("Another thing to say?");
-
-    setShowSpinner(false);
   }
 
   function handleKeyDown(event: any) {
