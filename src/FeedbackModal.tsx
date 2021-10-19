@@ -1,6 +1,5 @@
 import * as React from "react";
 import { sendFeedback } from "@feedbackfarm/core";
-import "./styles.css";
 
 type Props = {
   projectId: string;
@@ -9,7 +8,7 @@ type Props = {
 };
 export default function FeedbackModal(props: Props) {
   const [feedback, setFeedback] = React.useState("");
-  const [showSpinner, setShowSpinner] = React.useState(true);
+  const [showSpinner, setShowSpinner] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("Give feedback!");
   const [feedbackButtonText, setFeedbackButtonText] =
     React.useState("Send Feedback");
