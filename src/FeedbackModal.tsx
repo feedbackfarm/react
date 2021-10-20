@@ -1,5 +1,6 @@
 import * as React from "react";
 import { sendFeedback } from "@feedbackfarm/core";
+import { motion } from "framer-motion";
 
 type Props = {
   projectId: string;
@@ -8,7 +9,6 @@ type Props = {
 };
 export default function FeedbackModal(props: Props) {
   const [feedback, setFeedback] = React.useState("");
-  const [showSpinner, setShowSpinner] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("Give feedback!");
   const [feedbackButtonText, setFeedbackButtonText] =
     React.useState("Send Feedback");
@@ -19,7 +19,6 @@ export default function FeedbackModal(props: Props) {
     try {
       if (state === "conclusion") {
         setFeedback("");
-        setShowSpinner(false);
         setState("ask");
         setModalTitle("Give feedback!");
         setFeedbackButtonText("Send Feedback");
@@ -40,16 +39,13 @@ export default function FeedbackModal(props: Props) {
         throw new Error(result.statusText);
       }
 
-      setShowSpinner(true);
       setState("conclusion");
       setModalTitle("Thank you!");
       setFeedbackButtonText("Another thing to say?");
-
-      setShowSpinner(false);
-      setIsLoading(false);
     } catch (error) {
       alert("An error occured, try again.");
     }
+    setIsLoading(false);
   }
 
   function handleKeyDown(event: any) {
@@ -71,7 +67,9 @@ export default function FeedbackModal(props: Props) {
 
   return (
     <>
-      <div
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
         style={{
           width: 300,
           minHeight: 150,
@@ -160,46 +158,62 @@ export default function FeedbackModal(props: Props) {
         )}
         {/* Footer */}
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <button
+          <div
             style={{
-              cursor: "pointer",
-              backgroundColor: !feedback
-                ? "rgba(51,51,51,0.2)"
-                : "rgb(13, 166, 125)",
-              borderRadius: 7,
-              marginTop: 16,
-              padding: 6,
-              color: "white",
+              width: "100%",
               display: "flex",
-              alignItems: "center",
               justifyContent: "center",
-              fontFamily: "helvetica, arial",
-              border: 0,
-              height: 35,
+              alignItems: "center",
             }}
-            onClick={handleSubmitFeedback}
           >
-            {feedbackButtonText}
-            {showSpinner && (
-              <div
-                style={{
-                  paddingTop: 2,
-                  paddingBottom: 2,
-                  marginLeft: 10,
-                }}
-              >
-                <div
-                  style={{
-                    border: "10px solid #f3f3f3",
-                    borderTop: "10px solid #0da67d",
-                    borderRadius: "50%",
-                    WebkitAnimation: `${spin} 4s linear infinite`,
-                    animation: `${spin} 4s linear infinite`,
+            <motion.button
+              initial={{ width: "100%" }}
+              animate={{ width: isLoading ? "20%" : "100%" }}
+              style={{
+                cursor: "pointer",
+                backgroundColor: !feedback
+                  ? "rgba(51,51,51,0.2)"
+                  : "rgb(13, 166, 125)",
+                borderRadius: 7,
+                marginTop: 16,
+                padding: 6,
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "helvetica, arial",
+                border: 0,
+                height: 35,
+              }}
+              onClick={handleSubmitFeedback}
+            >
+              {!isLoading ? feedbackButtonText : ""}
+              {isLoading && (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut",
                   }}
-                ></div>
-              </div>
-            )}
-          </button>
+                  style={{
+                    paddingTop: 2,
+                    paddingBottom: 2,
+                  }}
+                >
+                  <div
+                    style={{
+                      border: "10px solid #f3f3f3",
+                      borderTop: "10px solid #0da67d",
+                      borderRadius: "50%",
+                      WebkitAnimation: `${spin} 4s linear infinite`,
+                      animation: `${spin} 4s linear infinite`,
+                    }}
+                  ></div>
+                </motion.div>
+              )}
+            </motion.button>
+          </div>
           <span
             style={{
               fontSize: 12,
@@ -219,7 +233,7 @@ export default function FeedbackModal(props: Props) {
             </a>
           </span>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
