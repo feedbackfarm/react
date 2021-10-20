@@ -82,6 +82,8 @@ export default function FeedbackModal(props: Props) {
           flexDirection: "column",
           justifyContent: "space-between",
           fontFamily: "helvetica, arial",
+          paddingTop: 15,
+          paddingBottom: 15,
         }}
       >
         {/* Header */}
@@ -131,7 +133,7 @@ export default function FeedbackModal(props: Props) {
               borderRadius: 7,
               fontSize: 14,
               resize: "none",
-              height: 55,
+              height: 90,
               color: "black",
               backgroundColor: "white",
               borderColor: "rgba(51,51,51,0.2)",
