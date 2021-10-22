@@ -33,7 +33,8 @@ export default function FeedbackModal(props: Props) {
       const result = await sendFeedback(
         props.projectId,
         feedback,
-        props.identifier
+        props.identifier,
+        window.location.pathname
       );
       if (result.status !== 200) {
         throw new Error(result.statusText);
