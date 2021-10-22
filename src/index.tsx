@@ -47,8 +47,12 @@ function FeedbackFarm(props: Props) {
       >
         {props.children}
       </div>
-      {/* @ts-ignore */}
-      <div ref={setPopperRef} style={styles.popper} {...attributes.popper}>
+      <div
+        // @ts-ignore
+        ref={setPopperRef}
+        style={{ ...styles.popper, minWidth: 300, minHeight: 230 }}
+        {...attributes.popper}
+      >
         {visible && (
           <FeedbackModal
             onClose={() => setVisibility(false)}
