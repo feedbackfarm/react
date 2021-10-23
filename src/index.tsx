@@ -50,7 +50,12 @@ function FeedbackFarm(props: Props) {
       <div
         // @ts-ignore
         ref={setPopperRef}
-        style={{ ...styles.popper, minWidth: 300, minHeight: 230 }}
+        style={{
+          ...styles.popper,
+          minWidth: 300,
+          minHeight: 230,
+          ...(!visible ? { pointerEvents: "none" } : {}),
+        }}
         {...attributes.popper}
       >
         {visible && (
