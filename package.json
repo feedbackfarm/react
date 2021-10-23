@@ -41,7 +41,6 @@
     "@popperjs/core": "^2.10.2",
     "framer-motion": "^4.1.17",
     "react-popper": "^2.2.5",
-    "react-tether": "^2.0.8",
-    "rollup-plugin-import-css": "^3.0.2"
+    "react-tether": "^2.0.8"
   }
 }
