@@ -40,7 +40,6 @@
     "@feedbackfarm/core": "^1.0.7",
     "@popperjs/core": "^2.10.2",
     "framer-motion": "^4.1.17",
-    "react-popper": "^2.2.5",
-    "react-tether": "^2.0.8"
+    "react-popper": "^2.2.5"
   }
 }
