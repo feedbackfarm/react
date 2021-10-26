@@ -1,6 +1,7 @@
 import * as React from "react";
-import { sendFeedback } from "@feedbackfarm/core";
+
 import { motion } from "framer-motion";
+import { sendFeedback } from "@feedbackfarm/core";
 
 type Props = {
   projectId: string;
@@ -56,7 +57,6 @@ export default function FeedbackModal(props: Props) {
   }
 
   const spin = `\
-   
        100% { -moz-transform: rotate(360deg); } 
        100% { -webkit-transform: rotate(360deg); } 
        100% { 
