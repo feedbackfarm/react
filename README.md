@@ -1,14 +1,34 @@
-# react
+# @feedbackfarm/react
+[Feedback.farm](https://feedback.farm) widget
 
-Demo in local
+Embed a small widget into your web application to start getting user feedback. 
 
-npm link
+*Your most unhappy customers are your greatest source of learning.* - [Bill Gates](https://www.hubspot.com/customer-feedback)
 
-cd ~/@feedbackfarm-react/demo
-npm link @feedbackfarm/react
+# Demos
 
-cd ~
-npm start
+* [Code Sandbox](https://codesandbox.io)
 
-cd demo
-npm start
+# Usage
+First create a project on the [feedback.farm](https://feedback.farm) platform and then grab the project id.
+
+```
+// index.tsx
+import FeedbackFarm from "@feedbackfarm/react";
+
+<FeedbackFarm projectId="...">
+  <span>
+    Give Feedback
+  </span>
+</FeedbackFarm>
+```
+
+### Parameters
+
+| Parameters        | Type           | Description           | Required  |
+| ------------- |:-------------:| :------------- | :-------------: |
+| projectId      | string | Project identifier available on [feedback.farm](feedback.farm) platform | ✅ |
+| identifier      | string      | User identifier (email, id, ...) |    |
+
+
+Full [documentation](https://notion.so)
