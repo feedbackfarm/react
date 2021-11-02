@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { motion } from "framer-motion";
 import { sendFeedback } from "@feedbackfarm/core";
+import "./styles.scss";
 
 type Props = {
   projectId: string;
@@ -56,59 +56,13 @@ export default function FeedbackModal(props: Props) {
     }
   }
 
-  const spin = `\
-       100% { -moz-transform: rotate(360deg); } 
-       100% { -webkit-transform: rotate(360deg); } 
-       100% { 
-           -webkit-transform: rotate(360deg); 
-           transform:rotate(360deg); 
-       } 
-   }
-   `;
-
   return (
     <>
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        style={{
-          width: 300,
-          minHeight: 150,
-          backgroundColor: "white",
-          borderRadius: 7,
-          boxShadow: "rgb(0 0 0 / 27%) 5px 5px 15px 0px",
-          display: "flex",
-          zIndex: 9999,
-          padding: 10,
-          flexDirection: "column",
-          justifyContent: "space-between",
-          fontFamily: "helvetica, arial",
-          paddingTop: 15,
-          paddingBottom: 15,
-        }}
-      >
+      <div className="container">
         {/* Header */}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            fontWeight: "bold",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ margin: 0, color: "black" }}>{modalTitle}</p>
-          <button
-            style={{
-              width: 20,
-              height: 20,
-              background: "none",
-              padding: 0,
-              border: 0,
-              cursor: "pointer",
-            }}
-            onClick={props.onClose}
-          >
+        <div className="header">
+          <p className="title">{modalTitle}</p>
+          <button className="closeButton" onClick={props.onClose}>
             <svg
               width="12px"
               height="12px"
@@ -129,114 +83,46 @@ export default function FeedbackModal(props: Props) {
           <textarea
             autoFocus
             placeholder="I really ..."
-            style={{
-              marginTop: 12,
-              borderRadius: 7,
-              fontSize: 14,
-              resize: "none",
-              height: 90,
-              color: "black",
-              backgroundColor: "white",
-              borderColor: "rgba(51,51,51,0.2)",
-              wordBreak: "break-word",
-              padding: 10,
-              fontFamily: "helvetica, arial",
-            }}
+            className="textArea"
             onKeyDown={handleKeyDown}
             onChange={(e) => setFeedback(e.target.value)}
           ></textarea>
         )}
 
         {state === "conclusion" && (
-          <p
-            style={{
-              marginTop: 16,
-              marginBottom: 16,
-              color: "black",
-              textAlign: "left",
-            }}
-          >
-            Your feedback has been received!
-          </p>
+          <p className="conclusion">Your feedback has been received!</p>
         )}
         {/* Footer */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <motion.button
-              initial={{ width: "100%" }}
-              animate={{ width: isLoading ? "20%" : "100%" }}
+        <div className="footer">
+          <div className="innerFooter">
+            <button
+              className="actionButton"
               style={{
-                cursor: "pointer",
                 backgroundColor: !feedback
                   ? "rgba(51,51,51,0.2)"
                   : "rgb(13, 166, 125)",
-                borderRadius: 7,
-                marginTop: 16,
-                padding: 6,
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "helvetica, arial",
-                border: 0,
-                height: 35,
+                ...(isLoading
+                  ? { animation: "shrinkButton 0.4s ease-in-out forwards" }
+                  : { animation: "unshrinkButton 0.1s ease-in-out forwards" }),
               }}
               onClick={handleSubmitFeedback}
             >
               {!isLoading ? feedbackButtonText : ""}
               {isLoading && (
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    paddingTop: 2,
-                    paddingBottom: 2,
-                  }}
-                >
-                  <div
-                    style={{
-                      border: "10px solid #f3f3f3",
-                      borderTop: "10px solid #0da67d",
-                      borderRadius: "50%",
-                      WebkitAnimation: `${spin} 4s linear infinite`,
-                      animation: `${spin} 4s linear infinite`,
-                    }}
-                  ></div>
-                </motion.div>
+                <div className="loadingContainer">
+                  <div className="loading"></div>
+                </div>
               )}
-            </motion.button>
+            </button>
           </div>
-          <span
-            style={{
-              fontSize: 12,
-              fontFamily: "helvetica, arial",
-              textAlign: "center",
-              marginTop: 12,
-              color: "rgb(174,174,174)",
-            }}
-          >
+          <span className="poweredBy">
             Powered by{" "}
-            <a
-              href="https://feedback.farm"
-              target="_blank"
-              style={{ color: "rgb(13,166,125)", textDecoration: "none" }}
-            >
+            <a href="https://feedback.farm" target="_blank" className="link">
               feedback.farm
             </a>
           </span>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 }
