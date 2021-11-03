@@ -15,6 +15,7 @@ export default function FeedbackModal(props: Props) {
     React.useState("Send Feedback");
   const [state, setState] = React.useState<"ask" | "conclusion">("ask");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   async function handleSubmitFeedback() {
     try {
@@ -45,7 +46,7 @@ export default function FeedbackModal(props: Props) {
       setModalTitle("Thank you!");
       setFeedbackButtonText("Another thing to say?");
     } catch (error) {
-      alert("An error occured, try again.");
+      setError("An error occured, try again.");
     }
     setIsLoading(false);
   }
@@ -94,6 +95,11 @@ export default function FeedbackModal(props: Props) {
         )}
         {/* Footer */}
         <div className="footer">
+          {error && (
+            <div className="error">
+              <span>{error}</span>
+            </div>
+          )}
           <div className="innerFooter">
             <button
               className="actionButton"
