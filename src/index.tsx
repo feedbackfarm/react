@@ -55,6 +55,7 @@ function FeedbackFarm(props: Props) {
           ...styles.popper,
           minWidth: 300,
           minHeight: 230,
+          zIndex: 9999,
           ...(!visible ? { pointerEvents: "none" } : {}),
         }}
         {...attributes.popper}
