@@ -8,6 +8,22 @@ type Props = {
   identifier?: string;
   onClose: () => void;
 };
+
+type FeedbackType = "BUG" | "FEATURE" | "OTHER";
+
+export const FeedbackColor = {
+  BUG: "#FF4D2B",
+  FEATURE: "#2ADE9E",
+  OTHER: "#16DBF5",
+};
+
+const disabledColor = "#c6c6c6";
+const placeholderMap = {
+  BUG: "I have an issue with ...",
+  FEATURE: "It would be nice ...",
+  OTHER: "I have a suggestion for ...",
+};
+
 export default function FeedbackModal(props: Props) {
   const [feedback, setFeedback] = React.useState("");
   const [modalTitle, setModalTitle] = React.useState("Give feedback!");
@@ -16,6 +32,7 @@ export default function FeedbackModal(props: Props) {
   const [state, setState] = React.useState<"ask" | "conclusion">("ask");
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [feedbackType, setFeedbackType] = React.useState<FeedbackType>();
 
   async function handleSubmitFeedback() {
     try {
@@ -24,10 +41,11 @@ export default function FeedbackModal(props: Props) {
         setState("ask");
         setModalTitle("Give feedback!");
         setFeedbackButtonText("Send Feedback");
+        setFeedbackType(undefined);
         return;
       }
 
-      if (!feedback || isLoading) {
+      if (!feedback || isLoading || !feedbackType) {
         return;
       }
 
@@ -35,6 +53,7 @@ export default function FeedbackModal(props: Props) {
       const result = await sendFeedback(
         props.projectId,
         feedback,
+        feedbackType,
         props.identifier,
         window.location.pathname
       );
@@ -62,28 +81,76 @@ export default function FeedbackModal(props: Props) {
       <div className="container">
         {/* Header */}
         <div className="header">
-          <p className="title">{modalTitle}</p>
-          <button className="closeButton" onClick={props.onClose}>
-            <svg
-              width="12px"
-              height="12px"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                id="Path"
-                d="M19.773 16.809 L12.94 9.953 19.789 3.186 C20.07 2.905 20.07 2.447 19.789 2.166 L17.841 0.208 C17.706 0.073 17.523 0 17.331 0 17.138 0 16.956 0.078 16.82 0.208 L10.003 6.955 3.174 0.213 C3.039 0.078 2.857 0.005 2.664 0.005 2.471 0.005 2.289 0.083 2.154 0.213 L0.211 2.171 C-0.07 2.452 -0.07 2.91 0.211 3.191 L7.06 9.958 0.232 16.809 C0.096 16.944 0.018 17.126 0.018 17.319 0.018 17.512 0.091 17.694 0.232 17.829 L2.18 19.787 C2.32 19.927 2.503 20 2.69 20 2.872 20 3.06 19.932 3.201 19.787 L10.003 12.957 16.81 19.781 C16.951 19.922 17.133 19.995 17.32 19.995 17.503 19.995 17.69 19.927 17.831 19.781 L19.779 17.824 C19.914 17.689 19.992 17.507 19.992 17.314 19.987 17.126 19.909 16.944 19.773 16.809 Z"
-                fill="#aeaeae"
-                stroke="none"
-              />
-            </svg>
-          </button>
+          <div className="top">
+            <p className="title">{modalTitle}</p>
+            <button className="closeButton" onClick={props.onClose}>
+              <svg
+                width="12px"
+                height="12px"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  id="Path"
+                  d="M19.773 16.809 L12.94 9.953 19.789 3.186 C20.07 2.905 20.07 2.447 19.789 2.166 L17.841 0.208 C17.706 0.073 17.523 0 17.331 0 17.138 0 16.956 0.078 16.82 0.208 L10.003 6.955 3.174 0.213 C3.039 0.078 2.857 0.005 2.664 0.005 2.471 0.005 2.289 0.083 2.154 0.213 L0.211 2.171 C-0.07 2.452 -0.07 2.91 0.211 3.191 L7.06 9.958 0.232 16.809 C0.096 16.944 0.018 17.126 0.018 17.319 0.018 17.512 0.091 17.694 0.232 17.829 L2.18 19.787 C2.32 19.927 2.503 20 2.69 20 2.872 20 3.06 19.932 3.201 19.787 L10.003 12.957 16.81 19.781 C16.951 19.922 17.133 19.995 17.32 19.995 17.503 19.995 17.69 19.927 17.831 19.781 L19.779 17.824 C19.914 17.689 19.992 17.507 19.992 17.314 19.987 17.126 19.909 16.944 19.773 16.809 Z"
+                  fill="#aeaeae"
+                  stroke="none"
+                />
+              </svg>
+            </button>
+          </div>
+          {state === "ask" && (
+            <>
+              <p className="subtitle">What do you want to say?</p>
+              <div className="buttons">
+                <button
+                  className="classificationButton"
+                  style={{
+                    backgroundColor:
+                      feedbackType === "FEATURE"
+                        ? FeedbackColor.FEATURE
+                        : disabledColor,
+                  }}
+                  onClick={() => setFeedbackType("FEATURE")}
+                >
+                  <span>Feature</span>
+                </button>
+
+                <button
+                  className="classificationButton"
+                  style={{
+                    backgroundColor:
+                      feedbackType === "BUG"
+                        ? FeedbackColor.BUG
+                        : disabledColor,
+                  }}
+                  onClick={() => setFeedbackType("BUG")}
+                >
+                  <span>Bug</span>
+                </button>
+                <button
+                  className="classificationButton"
+                  style={{
+                    backgroundColor:
+                      feedbackType === "OTHER"
+                        ? FeedbackColor.OTHER
+                        : disabledColor,
+                  }}
+                  onClick={() => setFeedbackType("OTHER")}
+                >
+                  <span>Other</span>
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {state === "ask" && (
           <textarea
             autoFocus
-            placeholder="I really ..."
+            placeholder={
+              feedbackType ? placeholderMap[feedbackType] : "I really ..."
+            }
             className="textArea"
             onKeyDown={handleKeyDown}
             onChange={(e) => setFeedback(e.target.value)}
@@ -104,21 +171,24 @@ export default function FeedbackModal(props: Props) {
             <button
               className="actionButton"
               style={{
-                backgroundColor: !feedback
-                  ? "rgba(51,51,51,0.2)"
-                  : "rgb(13, 166, 125)",
+                backgroundColor:
+                  !feedback || !feedbackType
+                    ? disabledColor
+                    : "rgb(46, 212, 167",
                 ...(isLoading
                   ? { animation: "shrinkButton 0.4s ease-in-out forwards" }
                   : { animation: "unshrinkButton 0.1s ease-in-out forwards" }),
               }}
               onClick={handleSubmitFeedback}
             >
-              {!isLoading ? feedbackButtonText : ""}
-              {isLoading && (
-                <div className="loadingContainer">
-                  <div className="loading"></div>
-                </div>
-              )}
+              <span className="feedbackButtonText">
+                {!isLoading ? feedbackButtonText : ""}
+                {isLoading && (
+                  <div className="loadingContainer">
+                    <div className="loading"></div>
+                  </div>
+                )}
+              </span>
             </button>
           </div>
           <span className="poweredBy">

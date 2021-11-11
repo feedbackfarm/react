@@ -37,7 +37,7 @@
     "dist"
   ],
   "dependencies": {
-    "@feedbackfarm/core": "^1.0.7",
+    "@feedbackfarm/core": "^1.0.9",
     "@popperjs/core": "^2.10.2",
     "react-popper": "^2.2.5"
   }
