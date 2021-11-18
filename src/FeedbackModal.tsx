@@ -122,7 +122,7 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("FEATURE")}
                 >
-                  Feature
+                  <span>Feature</span>
                 </button>
 
                 <button
@@ -135,7 +135,7 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("BUG")}
                 >
-                  Bug
+                  <span>Bug</span>
                 </button>
                 <button
                   className="FF210xFF_reset FF210xFF_classificationButton"
@@ -147,7 +147,7 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("OTHER")}
                 >
-                  Other
+                  <span>Other</span>
                 </button>
               </div>
             </>
