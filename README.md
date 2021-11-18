@@ -1,6 +1,8 @@
 # @feedbackfarm/react
 
-[Feedback.farm](https://feedback.farm) widget
+Feedback Farm widget
+
+Require a [Feedback Farm](https://feedback.farm) account
 
 Embed a small widget into your web application to start getting user feedback.
 
