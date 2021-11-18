@@ -76,14 +76,19 @@ export default function FeedbackModal(props: Props) {
     }
   }
 
+  function handleSetFeedbackType(type: FeedbackType) {
+    setFeedbackType(type);
+    document.getElementById("textAreaFeedback")?.focus();
+  }
+
   return (
     <>
-      <div className="container">
+      <div className="reset container">
         {/* Header */}
-        <div className="header">
-          <div className="top">
-            <p className="title">{modalTitle}</p>
-            <button className="closeButton" onClick={props.onClose}>
+        <div className="reset header">
+          <div className="reset top">
+            <p className="reset title">{modalTitle}</p>
+            <button className="reset closeButton" onClick={props.onClose}>
               <svg
                 width="12px"
                 height="12px"
@@ -101,42 +106,42 @@ export default function FeedbackModal(props: Props) {
           </div>
           {state === "ask" && (
             <>
-              <p className="subtitle">What do you want to say?</p>
-              <div className="buttons">
+              <p className="reset subtitle">What do you want to say?</p>
+              <div className="reset buttons">
                 <button
-                  className="classificationButton"
+                  className="reset classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "FEATURE"
                         ? FeedbackColor.FEATURE
                         : disabledColor,
                   }}
-                  onClick={() => setFeedbackType("FEATURE")}
+                  onClick={() => handleSetFeedbackType("FEATURE")}
                 >
                   <span>Feature</span>
                 </button>
 
                 <button
-                  className="classificationButton"
+                  className="reset classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "BUG"
                         ? FeedbackColor.BUG
                         : disabledColor,
                   }}
-                  onClick={() => setFeedbackType("BUG")}
+                  onClick={() => handleSetFeedbackType("BUG")}
                 >
                   <span>Bug</span>
                 </button>
                 <button
-                  className="classificationButton"
+                  className="reset classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "OTHER"
                         ? FeedbackColor.OTHER
                         : disabledColor,
                   }}
-                  onClick={() => setFeedbackType("OTHER")}
+                  onClick={() => handleSetFeedbackType("OTHER")}
                 >
                   <span>Other</span>
                 </button>
@@ -147,29 +152,29 @@ export default function FeedbackModal(props: Props) {
 
         {state === "ask" && (
           <textarea
-            autoFocus
+            id="textAreaFeedback"
             placeholder={
               feedbackType ? placeholderMap[feedbackType] : "I really ..."
             }
-            className="textArea"
+            className="reset textArea"
             onKeyDown={handleKeyDown}
             onChange={(e) => setFeedback(e.target.value)}
           ></textarea>
         )}
 
         {state === "conclusion" && (
-          <p className="conclusion">Your feedback has been received!</p>
+          <p className="reset conclusion">Your feedback has been received!</p>
         )}
         {/* Footer */}
-        <div className="footer">
+        <div className="reset footer">
           {error && (
-            <div className="error">
+            <div className="reset error">
               <span>{error}</span>
             </div>
           )}
-          <div className="innerFooter">
+          <div className="reset innerFooter">
             <button
-              className="actionButton"
+              className="reset actionButton"
               style={{
                 backgroundColor:
                   !feedback || !feedbackType
@@ -181,17 +186,17 @@ export default function FeedbackModal(props: Props) {
               }}
               onClick={handleSubmitFeedback}
             >
-              <span className="feedbackButtonText">
+              <span className="reset feedbackButtonText">
                 {!isLoading ? feedbackButtonText : ""}
                 {isLoading && (
-                  <div className="loadingContainer">
-                    <div className="loading"></div>
+                  <div className="reset loadingContainer">
+                    <div className="reset loading"></div>
                   </div>
                 )}
               </span>
             </button>
           </div>
-          <span className="poweredBy">
+          <span className="reset poweredBy">
             Powered by{" "}
             <a href="https://feedback.farm" target="_blank" className="link">
               feedback.farm
