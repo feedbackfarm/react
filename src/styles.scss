@@ -1,4 +1,4 @@
-.reset > div,
+.FF210xFF_reset > div,
 p {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ p {
   vertical-align: baseline;
 }
 
-.reset > button {
+.FF210xFF_reset > button {
   background-color: transparent;
   outline: none;
   border: 0;
@@ -16,7 +16,7 @@ p {
 }
 // Reset CSS
 
-@keyframes scaleContainer {
+@keyframes FF210xFF_scaleContainer {
   0% {
     transform: scale(0);
   }
@@ -25,7 +25,7 @@ p {
   }
 }
 
-@keyframes shrinkButton {
+@keyframes FF210xFF_shrinkButton {
   0% {
     width: 100%;
   }
@@ -34,7 +34,7 @@ p {
   }
 }
 
-@keyframes unshrinkButton {
+@keyframes FF210xFF_unshrinkButton {
   0% {
     width: 20%;
   }
@@ -43,14 +43,14 @@ p {
   }
 }
 
-@keyframes spin {
+@keyframes FF210xFF_spin {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
 
-.container {
+.FF210xFF_container {
   width: 300px;
   min-height: 150px;
   background-color: white;
@@ -63,29 +63,29 @@ p {
   justify-content: space-between;
   font-family: helvetica, arial;
   padding: 30px 25px 25px 25px;
-  animation: scaleContainer 0.2s ease-in-out;
-  -webkit-animation: scaleContainer 0.2s ease-in-out;
+  animation: FF210xFF_scaleContainer 0.2s ease-in-out;
+  -webkit-animation: FF210xFF_scaleContainer 0.2s ease-in-out;
 
-  .header {
+  .FF210xFF_header {
     width: 100%;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 
-    .top {
+    .FF210xFF_top {
       width: 100%;
       display: flex;
       font-weight: bold;
       justify-content: space-between;
       align-items: center;
 
-      .title {
+      .FF210xFF_title {
         margin: 0px;
         color: black;
         font-size: 20px;
       }
 
-      .closeButton {
+      .FF210xFF_closeButton {
         width: 20px;
         height: 20px;
         background: none;
@@ -95,18 +95,18 @@ p {
       }
     }
 
-    .subtitle {
+    .FF210xFF_subtitle {
       margin: 0px;
       color: black;
       font-size: 14px;
       font-family: helvetica, arial;
     }
 
-    .buttons {
+    .FF210xFF_buttons {
       display: flex;
       margin-left: 0px;
       margin-top: 12px;
-      .classificationButton {
+      .FF210xFF_classificationButton {
         cursor: pointer;
         border-radius: 20px;
         padding: 4px;
@@ -124,7 +124,7 @@ p {
     }
   }
 
-  .textArea {
+  .FF210xFF_textArea {
     margin-top: 12px;
     border-radius: 7px;
     font-size: 14px;
@@ -138,31 +138,31 @@ p {
     font-family: helvetica, arial;
   }
 
-  .conclusion {
+  .FF210xFF_conclusion {
     color: black;
     text-align: left;
     font-size: 14px;
     margin-top: -30px;
   }
 
-  .footer {
+  .FF210xFF_footer {
     display: flex;
     flex-direction: column;
 
-    .error {
+    .FF210xFF_error {
       margin-top: 8px;
       font-family: helvetica, arial;
       font-size: 12px;
       color: red;
     }
 
-    .innerFooter {
+    .FF210xFF_innerFooter {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      .actionButton {
+      .FF210xFF_actionButton {
         cursor: pointer;
         border-radius: 7px;
         margin-top: 16px;
@@ -177,9 +177,9 @@ p {
         width: 100%;
         font-size: 14px;
 
-        .feedbackButtonText {
+        .FF210xFF_feedbackButtonText {
           margin-top: 2px;
-          .loadingContainer {
+          .FF210xFF_loadingContainer {
             padding-top: 2px;
             padding-bottom: 2px;
 
@@ -187,7 +187,7 @@ p {
             -moz-animation: spin 1s linear infinite;
             animation: spin 1s linear infinite;
 
-            .loading {
+            .FF210xFF_loading {
               border: 10px solid #f3f3f3;
               border-top: 10px solid #0da67d;
               border-radius: 50%;
@@ -196,14 +196,14 @@ p {
         }
       }
     }
-    .poweredBy {
+    .FF210xFF_poweredBy {
       font-size: 13px;
       font-family: helvetica, arial;
       text-align: center;
       margin-top: 12px;
       color: rgb(174, 174, 174);
 
-      .link {
+      .FF210xFF_link {
         color: rgb(13, 166, 125);
         text-decoration: none;
       }

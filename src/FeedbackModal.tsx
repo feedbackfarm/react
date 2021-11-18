@@ -78,17 +78,20 @@ export default function FeedbackModal(props: Props) {
 
   function handleSetFeedbackType(type: FeedbackType) {
     setFeedbackType(type);
-    document.getElementById("textAreaFeedback")?.focus();
+    document.getElementById("FF210xFF_textAreaFeedback")?.focus();
   }
 
   return (
     <>
-      <div className="reset container">
+      <div className="FF210xFF_reset FF210xFF_container">
         {/* Header */}
-        <div className="reset header">
-          <div className="reset top">
-            <p className="reset title">{modalTitle}</p>
-            <button className="reset closeButton" onClick={props.onClose}>
+        <div className="FF210xFF_reset FF210xFF_header">
+          <div className="FF210xFF_reset FF210xFF_top">
+            <p className="FF210xFF_reset FF210xFF_title">{modalTitle}</p>
+            <button
+              className="FF210xFF_reset FF210xFF_closeButton"
+              onClick={props.onClose}
+            >
               <svg
                 width="12px"
                 height="12px"
@@ -96,7 +99,6 @@ export default function FeedbackModal(props: Props) {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  id="Path"
                   d="M19.773 16.809 L12.94 9.953 19.789 3.186 C20.07 2.905 20.07 2.447 19.789 2.166 L17.841 0.208 C17.706 0.073 17.523 0 17.331 0 17.138 0 16.956 0.078 16.82 0.208 L10.003 6.955 3.174 0.213 C3.039 0.078 2.857 0.005 2.664 0.005 2.471 0.005 2.289 0.083 2.154 0.213 L0.211 2.171 C-0.07 2.452 -0.07 2.91 0.211 3.191 L7.06 9.958 0.232 16.809 C0.096 16.944 0.018 17.126 0.018 17.319 0.018 17.512 0.091 17.694 0.232 17.829 L2.18 19.787 C2.32 19.927 2.503 20 2.69 20 2.872 20 3.06 19.932 3.201 19.787 L10.003 12.957 16.81 19.781 C16.951 19.922 17.133 19.995 17.32 19.995 17.503 19.995 17.69 19.927 17.831 19.781 L19.779 17.824 C19.914 17.689 19.992 17.507 19.992 17.314 19.987 17.126 19.909 16.944 19.773 16.809 Z"
                   fill="#aeaeae"
                   stroke="none"
@@ -106,10 +108,12 @@ export default function FeedbackModal(props: Props) {
           </div>
           {state === "ask" && (
             <>
-              <p className="reset subtitle">What do you want to say?</p>
-              <div className="reset buttons">
+              <p className="FF210xFF_reset FF210xFF_subtitle">
+                What do you want to say?
+              </p>
+              <div className="FF210xFF_reset FF210xFF_buttons">
                 <button
-                  className="reset classificationButton"
+                  className="FF210xFF_reset FF210xFF_classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "FEATURE"
@@ -122,7 +126,7 @@ export default function FeedbackModal(props: Props) {
                 </button>
 
                 <button
-                  className="reset classificationButton"
+                  className="FF210xFF_reset FF210xFF_classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "BUG"
@@ -134,7 +138,7 @@ export default function FeedbackModal(props: Props) {
                   <span>Bug</span>
                 </button>
                 <button
-                  className="reset classificationButton"
+                  className="FF210xFF_reset FF210xFF_classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "OTHER"
@@ -152,29 +156,31 @@ export default function FeedbackModal(props: Props) {
 
         {state === "ask" && (
           <textarea
-            id="textAreaFeedback"
+            id="FF210xFF_textAreaFeedback"
             placeholder={
               feedbackType ? placeholderMap[feedbackType] : "I really ..."
             }
-            className="reset textArea"
+            className="FF210xFF_reset FF210xFF_textArea"
             onKeyDown={handleKeyDown}
             onChange={(e) => setFeedback(e.target.value)}
           ></textarea>
         )}
 
         {state === "conclusion" && (
-          <p className="reset conclusion">Your feedback has been received!</p>
+          <p className="FF210xFF_reset FF210xFF_conclusion">
+            Your feedback has been received!
+          </p>
         )}
         {/* Footer */}
-        <div className="reset footer">
+        <div className="FF210xFF_reset FF210xFF_footer">
           {error && (
-            <div className="reset error">
+            <div className="FF210xFF_reset FF210xFF_error">
               <span>{error}</span>
             </div>
           )}
-          <div className="reset innerFooter">
+          <div className="FF210xFF_reset FF210xFF_innerFooter">
             <button
-              className="reset actionButton"
+              className="FF210xFF_reset FF210xFF_actionButton"
               style={{
                 backgroundColor:
                   !feedback || !feedbackType
@@ -186,19 +192,23 @@ export default function FeedbackModal(props: Props) {
               }}
               onClick={handleSubmitFeedback}
             >
-              <span className="reset feedbackButtonText">
+              <span className="FF210xFF_reset FF210xFF_feedbackButtonText">
                 {!isLoading ? feedbackButtonText : ""}
                 {isLoading && (
-                  <div className="reset loadingContainer">
-                    <div className="reset loading"></div>
+                  <div className="FF210xFF_reset FF210xFF_loadingContainer">
+                    <div className="FF210xFF_reset FF210xFF_loading"></div>
                   </div>
                 )}
               </span>
             </button>
           </div>
-          <span className="reset poweredBy">
+          <span className="FF210xFF_reset FF210xFF_poweredBy">
             Powered by{" "}
-            <a href="https://feedback.farm" target="_blank" className="link">
+            <a
+              href="https://feedback.farm"
+              target="_blank"
+              className="FF210xFF_link"
+            >
               feedback.farm
             </a>
           </span>
