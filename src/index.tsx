@@ -38,7 +38,7 @@ function FeedbackFarm(props: Props) {
   });
 
   const wrapperRef = React.useRef(null);
-  useOutsideAlerter(wrapperRef, () => setVisibility(false));
+  useOutsideAlerter(wrapperRef, () => handleClose());
 
   function handleOpen() {
     setVisibility(true);
