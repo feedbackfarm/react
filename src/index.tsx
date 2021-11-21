@@ -7,6 +7,8 @@ type Props = {
   children: React.ReactNode;
   projectId: string;
   identifier?: string;
+  onOpen?: () => void;
+  onClose?: () => void;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -38,12 +40,26 @@ function FeedbackFarm(props: Props) {
   const wrapperRef = React.useRef(null);
   useOutsideAlerter(wrapperRef, () => setVisibility(false));
 
+  function handleOpen() {
+    setVisibility(true);
+    if (props.onOpen) {
+      props.onOpen();
+    }
+  }
+
+  function handleClose() {
+    setVisibility(false);
+    if (props.onClose) {
+      props.onClose();
+    }
+  }
+
   return (
     <div ref={wrapperRef}>
       <div
         // @ts-ignore
         ref={setReferenceRef}
-        onClick={() => setVisibility(true)}
+        onClick={handleOpen}
         style={{ cursor: "pointer" }}
       >
         {props.children}
@@ -62,7 +78,7 @@ function FeedbackFarm(props: Props) {
       >
         {visible && (
           <FeedbackModal
-            onClose={() => setVisibility(false)}
+            onClose={handleClose}
             projectId={props.projectId}
             identifier={props.identifier}
           />
