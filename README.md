@@ -22,7 +22,7 @@ Embed a small widget into your web application to start getting user feedback.
 // index.jsx
 import FeedbackFarm from "@feedbackfarm/react";
 
-<FeedbackFarm projectId="...">
+<FeedbackFarm projectId="replace_with_your_project_id" identifier="your_user_identifier">
   <span>
     Give Feedback
   </span>
