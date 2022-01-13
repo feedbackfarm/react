@@ -9,6 +9,7 @@ type Props = {
   identifier?: string;
   onOpen?: () => void;
   onClose?: () => void;
+  onFeedbackAdded?: () => void;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -78,6 +79,7 @@ function FeedbackFarm(props: Props) {
       >
         {visible && (
           <FeedbackModal
+            onFeedbackAdded={props.onFeedbackAdded}
             onClose={handleClose}
             projectId={props.projectId}
             identifier={props.identifier}

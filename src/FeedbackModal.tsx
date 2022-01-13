@@ -7,6 +7,7 @@ type Props = {
   projectId: string;
   identifier?: string;
   onClose: () => void;
+  onFeedbackAdded?: () => void;
 };
 
 type FeedbackType = "BUG" | "FEATURE" | "OTHER";
@@ -59,6 +60,10 @@ export default function FeedbackModal(props: Props) {
       );
       if (result.status !== 200) {
         throw new Error(result.statusText);
+      }
+
+      if (props.onFeedbackAdded) {
+        props.onFeedbackAdded();
       }
 
       setState("conclusion");
