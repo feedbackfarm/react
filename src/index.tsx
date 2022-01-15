@@ -1,15 +1,16 @@
 import * as React from "react";
 
 import { usePopper } from "react-popper";
-import FeedbackModal from "./FeedbackModal";
+import FeedbackModal, { Colors } from "./FeedbackModal";
 
 type Props = {
   children: React.ReactNode;
-  projectId: string;
+  colors?: Colors;
   identifier?: string;
-  onOpen?: () => void;
   onClose?: () => void;
   onFeedbackAdded?: () => void;
+  onOpen?: () => void;
+  projectId: string;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -83,6 +84,7 @@ function FeedbackFarm(props: Props) {
             onClose={handleClose}
             projectId={props.projectId}
             identifier={props.identifier}
+            colors={props.colors}
           />
         )}
       </div>

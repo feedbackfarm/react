@@ -3,7 +3,7 @@ import * as React from "react";
 import { sendFeedback } from "@feedbackfarm/core";
 import "./styles.scss";
 
-type Colors = {
+export type Colors = {
   feature?: { text: string; background: string };
   bug?: { text: string; background: string };
   other?: { text: string; background: string };
