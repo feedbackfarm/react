@@ -3,27 +3,48 @@ import * as React from "react";
 import { sendFeedback } from "@feedbackfarm/core";
 import "./styles.scss";
 
+type Colors = {
+  colors?: {
+    feature?: { text: string; background: string };
+    bug?: { text: string; background: string };
+    other?: { text: string; background: string };
+    send?: { text: string; background: string };
+    background?: string;
+    disabledColor?: string;
+  };
+};
+
 type Props = {
   projectId: string;
   identifier?: string;
   onClose: () => void;
   onFeedbackAdded?: () => void;
+  colors?: Colors;
 };
 
 type FeedbackType = "BUG" | "FEATURE" | "OTHER";
 
-export const FeedbackColor = {
-  BUG: "#FF4D2B",
-  FEATURE: "#2ADE9E",
-  OTHER: "#16DBF5",
-};
-
-const disabledColor = "#c6c6c6";
 const placeholderMap = {
   BUG: "I have an issue with ...",
   FEATURE: "It would be nice ...",
   OTHER: "I have a suggestion for ...",
 };
+
+function formatColor(colors?: Colors) {
+  const defaultColor = {
+    colors: {
+      feature: { text: "#FFFFFF", background: "#2ADE9E" },
+      bug: { text: "#FFFFFF", background: "#FF4D2B" },
+      other: { text: "#FFFFFF", background: "#16DBF5" },
+      send: { text: "#FFFFFF", background: "rgb(46, 212, 167)" },
+      background: "#FFFFFF",
+      disabledColor: "#C6C6C6",
+      textColor: "black",
+    },
+  };
+
+  return { ...defaultColor.colors, ...colors?.colors };
+}
 
 export default function FeedbackModal(props: Props) {
   const [feedback, setFeedback] = React.useState("");
@@ -34,6 +55,8 @@ export default function FeedbackModal(props: Props) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [feedbackType, setFeedbackType] = React.useState<FeedbackType>();
+
+  const widgetColor = formatColor(props.colors);
 
   async function handleSubmitFeedback() {
     try {
@@ -88,11 +111,19 @@ export default function FeedbackModal(props: Props) {
 
   return (
     <>
-      <div className="FF210xFF_reset FF210xFF_container">
+      <div
+        className="FF210xFF_reset FF210xFF_container"
+        style={{ backgroundColor: widgetColor.background }}
+      >
         {/* Header */}
         <div className="FF210xFF_reset FF210xFF_header">
           <div className="FF210xFF_reset FF210xFF_top">
-            <p className="FF210xFF_reset FF210xFF_title">{modalTitle}</p>
+            <p
+              className="FF210xFF_reset FF210xFF_title"
+              style={{ color: widgetColor.textColor }}
+            >
+              {modalTitle}
+            </p>
             <button
               className="FF210xFF_reset FF210xFF_closeButton"
               onClick={props.onClose}
@@ -113,7 +144,10 @@ export default function FeedbackModal(props: Props) {
           </div>
           {state === "ask" && (
             <>
-              <p className="FF210xFF_reset FF210xFF_subtitle">
+              <p
+                className="FF210xFF_reset FF210xFF_subtitle"
+                style={{ color: widgetColor.textColor }}
+              >
                 What do you want to say?
               </p>
               <div className="FF210xFF_reset FF210xFF_buttons">
@@ -122,12 +156,14 @@ export default function FeedbackModal(props: Props) {
                   style={{
                     backgroundColor:
                       feedbackType === "FEATURE"
-                        ? FeedbackColor.FEATURE
-                        : disabledColor,
+                        ? widgetColor.feature.background
+                        : widgetColor.disabledColor,
                   }}
                   onClick={() => handleSetFeedbackType("FEATURE")}
                 >
-                  <span>Feature</span>
+                  <span style={{ color: widgetColor.feature.text }}>
+                    Feature
+                  </span>
                 </button>
 
                 <button
@@ -135,24 +171,24 @@ export default function FeedbackModal(props: Props) {
                   style={{
                     backgroundColor:
                       feedbackType === "BUG"
-                        ? FeedbackColor.BUG
-                        : disabledColor,
+                        ? widgetColor.bug.background
+                        : widgetColor.disabledColor,
                   }}
                   onClick={() => handleSetFeedbackType("BUG")}
                 >
-                  <span>Bug</span>
+                  <span style={{ color: widgetColor.bug.text }}>Bug</span>
                 </button>
                 <button
                   className="FF210xFF_reset FF210xFF_classificationButton"
                   style={{
                     backgroundColor:
                       feedbackType === "OTHER"
-                        ? FeedbackColor.OTHER
-                        : disabledColor,
+                        ? widgetColor.other.background
+                        : widgetColor.disabledColor,
                   }}
                   onClick={() => handleSetFeedbackType("OTHER")}
                 >
-                  <span>Other</span>
+                  <span style={{ color: widgetColor.other.text }}>Other</span>
                 </button>
               </div>
             </>
@@ -168,11 +204,19 @@ export default function FeedbackModal(props: Props) {
             className="FF210xFF_reset FF210xFF_textArea"
             onKeyDown={handleKeyDown}
             onChange={(e) => setFeedback(e.target.value)}
+            style={{
+              backgroundColor: widgetColor.background,
+              borderColor: widgetColor.disabledColor,
+              color: widgetColor.textColor,
+            }}
           ></textarea>
         )}
 
         {state === "conclusion" && (
-          <p className="FF210xFF_reset FF210xFF_conclusion">
+          <p
+            className="FF210xFF_reset FF210xFF_conclusion"
+            style={{ color: widgetColor.textColor }}
+          >
             Your feedback has been received!
           </p>
         )}
@@ -189,15 +233,18 @@ export default function FeedbackModal(props: Props) {
               style={{
                 backgroundColor:
                   !feedback || !feedbackType
-                    ? disabledColor
-                    : "rgb(46, 212, 167",
+                    ? widgetColor.disabledColor
+                    : widgetColor.send.background,
                 ...(isLoading
                   ? { animation: "shrinkButton 0.4s ease-in-out forwards" }
                   : { animation: "unshrinkButton 0.1s ease-in-out forwards" }),
               }}
               onClick={handleSubmitFeedback}
             >
-              <span className="FF210xFF_reset FF210xFF_feedbackButtonText">
+              <span
+                className="FF210xFF_reset FF210xFF_feedbackButtonText"
+                style={{ color: widgetColor.send.text }}
+              >
                 {!isLoading ? feedbackButtonText : ""}
                 {isLoading && (
                   <div className="FF210xFF_reset FF210xFF_loadingContainer">
