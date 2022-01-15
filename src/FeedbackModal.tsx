@@ -10,6 +10,7 @@ export type Colors = {
   send?: { text: string; background: string };
   background?: string;
   disabledColor?: string;
+  borderColor?: string;
 };
 
 type Props = {
