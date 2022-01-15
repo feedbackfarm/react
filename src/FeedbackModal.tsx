@@ -4,14 +4,12 @@ import { sendFeedback } from "@feedbackfarm/core";
 import "./styles.scss";
 
 type Colors = {
-  colors?: {
-    feature?: { text: string; background: string };
-    bug?: { text: string; background: string };
-    other?: { text: string; background: string };
-    send?: { text: string; background: string };
-    background?: string;
-    disabledColor?: string;
-  };
+  feature?: { text: string; background: string };
+  bug?: { text: string; background: string };
+  other?: { text: string; background: string };
+  send?: { text: string; background: string };
+  background?: string;
+  disabledColor?: string;
 };
 
 type Props = {
@@ -32,18 +30,16 @@ const placeholderMap = {
 
 function formatColor(colors?: Colors) {
   const defaultColor = {
-    colors: {
-      feature: { text: "#FFFFFF", background: "#2ADE9E" },
-      bug: { text: "#FFFFFF", background: "#FF4D2B" },
-      other: { text: "#FFFFFF", background: "#16DBF5" },
-      send: { text: "#FFFFFF", background: "rgb(46, 212, 167)" },
-      background: "#FFFFFF",
-      disabledColor: "#C6C6C6",
-      textColor: "black",
-    },
+    feature: { text: "#FFFFFF", background: "#2ADE9E" },
+    bug: { text: "#FFFFFF", background: "#FF4D2B" },
+    other: { text: "#FFFFFF", background: "#16DBF5" },
+    send: { text: "#FFFFFF", background: "rgb(46, 212, 167)" },
+    background: "#FFFFFF",
+    disabledColor: "#C6C6C6",
+    textColor: "black",
   };
 
-  return { ...defaultColor.colors, ...colors?.colors };
+  return { ...defaultColor, ...colors };
 }
 
 export default function FeedbackModal(props: Props) {
