@@ -37,6 +37,7 @@ function formatColor(colors?: Colors) {
     background: "#FFFFFF",
     disabledColor: "#C6C6C6",
     textColor: "black",
+    borderColor: "transparent",
   };
 
   return { ...defaultColor, ...colors };
@@ -109,7 +110,10 @@ export default function FeedbackModal(props: Props) {
     <>
       <div
         className="FF210xFF_reset FF210xFF_container"
-        style={{ backgroundColor: widgetColor.background }}
+        style={{
+          backgroundColor: widgetColor.background,
+          border: `1px solid ${widgetColor.borderColor}`,
+        }}
       >
         {/* Header */}
         <div className="FF210xFF_reset FF210xFF_header">
