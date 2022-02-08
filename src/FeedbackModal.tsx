@@ -3,6 +3,8 @@ import * as React from "react";
 import { sendFeedback } from "@feedbackfarm/core";
 import "./styles.scss";
 
+export type IdentifierMode = "required" | "optional";
+
 export type Colors = {
   feature?: { text: string; background: string };
   bug?: { text: string; background: string };
@@ -19,6 +21,8 @@ type Props = {
   onClose: () => void;
   onFeedbackAdded?: () => void;
   colors?: Colors;
+  identifierMode?: IdentifierMode;
+  identifierPlaceholder?: string;
 };
 
 type FeedbackType = "BUG" | "FEATURE" | "OTHER";
@@ -54,6 +58,8 @@ export default function FeedbackModal(props: Props) {
   const [error, setError] = React.useState("");
   const [feedbackType, setFeedbackType] = React.useState<FeedbackType>();
 
+  const [identifier, setIdentifier] = React.useState(props.identifier);
+
   const widgetColor = formatColor(props.colors);
 
   async function handleSubmitFeedback() {
@@ -71,12 +77,16 @@ export default function FeedbackModal(props: Props) {
         return;
       }
 
+      if (props.identifierMode === "required" && !identifier) {
+        return;
+      }
+
       setIsLoading(true);
       const result = await sendFeedback(
         props.projectId,
         feedback,
         feedbackType,
-        props.identifier,
+        identifier,
         window.location.pathname
       );
       if (result.status !== 200) {
@@ -106,6 +116,16 @@ export default function FeedbackModal(props: Props) {
     setFeedbackType(type);
     document.getElementById("FF210xFF_textAreaFeedback")?.focus();
   }
+
+  const sendButtonBackgroundColor = (() => {
+    if (props.identifierMode === "required" && !identifier) {
+      return widgetColor.disabledColor;
+    }
+
+    return !feedback || !feedbackType
+      ? widgetColor.disabledColor
+      : widgetColor.send.background;
+  })();
 
   return (
     <>
@@ -213,6 +233,27 @@ export default function FeedbackModal(props: Props) {
           ></textarea>
         )}
 
+        {state === "ask" && !!props.identifierMode && (
+          <input
+            style={{
+              marginTop: 8,
+              backgroundColor: widgetColor.background,
+              border: `1px solid ${widgetColor.disabledColor}`,
+              color: widgetColor.textColor,
+              borderRadius: 7,
+              boxShadow: "none",
+              padding: 10,
+              outline: "none",
+            }}
+            value={identifier}
+            placeholder={
+              props.identifierPlaceholder ||
+              "Your email to contact you if needed"
+            }
+            onChange={(e) => setIdentifier(e.target.value)}
+          />
+        )}
+
         {state === "conclusion" && (
           <p
             className="FF210xFF_reset FF210xFF_conclusion"
@@ -232,10 +273,7 @@ export default function FeedbackModal(props: Props) {
             <button
               className="FF210xFF_reset FF210xFF_actionButton"
               style={{
-                backgroundColor:
-                  !feedback || !feedbackType
-                    ? widgetColor.disabledColor
-                    : widgetColor.send.background,
+                backgroundColor: sendButtonBackgroundColor,
                 ...(isLoading
                   ? { animation: "shrinkButton 0.4s ease-in-out forwards" }
                   : { animation: "unshrinkButton 0.1s ease-in-out forwards" }),

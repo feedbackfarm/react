@@ -31,17 +31,19 @@ import FeedbackFarm from "@feedbackfarm/react";
 
 ### Parameters
 
-| Parameters   |  Type  | Description                                                             | Required |
-| ------------ | :----: | :---------------------------------------------------------------------- | :------: |
-| `projectId`  | string | Project identifier available on [feedback.farm](feedback.farm) platform |    ✅    |
-| `identifier` | string | User identifier (email, id, ...)                                        |          |
-| `onClose` | function | Called when widget is closed                                       |          |
-| `onFeedbackAdded` | function | Called when a feedback has been added                                       |          |
-| `onOpen` | function | Called when widget modal is open                                       |          |
-| `colors` | Colors | Change widget colors (see below)                                       |          |
-
+| Parameters              |      Type      | Description                                                             | Required |
+| ----------------------- | :------------: | :---------------------------------------------------------------------- | :------: |
+| `projectId`             |     string     | Project identifier available on [feedback.farm](feedback.farm) platform |    ✅    |
+| `identifier`            |     string     | User identifier (email, id, ...)                                        |          |
+| `onClose`               |    function    | Called when widget is closed                                            |          |
+| `onFeedbackAdded`       |    function    | Called when a feedback has been added                                   |          |
+| `onOpen`                |    function    | Called when widget modal is open                                        |          |
+| `colors`                |     Colors     | Change widget colors (see below)                                        |          |
+| `identifierMode`        | IdentifierMode | See below                                                               |          |
+| `identifierPlaceholder` |     string     | The input placeholder (require `identifierMode`)                        |          |
 
 ### Colors
+
 ```
 {
   feature?: { text: string; background: string };
@@ -52,6 +54,13 @@ import FeedbackFarm from "@feedbackfarm/react";
   disabledColor?: string;
   borderColor?: string;
 }
+```
+
+### IdentifierMode
+
+```
+required = user is required to provide an identifier (email, id, ...)
+optional = user is not force to provide an identifier
 ```
 
 Full [documentation](https://www.notion.so/Embed-Widget-In-Your-React-Website-6feaf05619c4461d832c7c685c664c33)
