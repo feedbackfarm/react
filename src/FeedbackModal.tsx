@@ -1,7 +1,9 @@
 import * as React from "react";
+import {ReactNode} from "react";
 
-import { sendFeedback } from "@feedbackfarm/core";
+import {sendFeedback} from "@feedbackfarm/core";
 import "./styles.scss";
+import {getStrings, Strings} from "./getStrings";
 
 export type IdentifierMode = "required" | "optional";
 
@@ -23,39 +25,32 @@ type Props = {
   colors?: Colors;
   identifierMode?: IdentifierMode;
   identifierPlaceholder?: string;
+  strings?: Strings
 };
 
 type FeedbackType = "BUG" | "FEATURE" | "OTHER";
 
-const placeholderMap = {
-  BUG: "I have an issue with ...",
-  FEATURE: "It would be nice ...",
-  OTHER: "I have a suggestion for ...",
-};
-
 function formatColor(colors?: Colors) {
   const defaultColor = {
-    feature: { text: "#FFFFFF", background: "#2ADE9E" },
-    bug: { text: "#FFFFFF", background: "#FF4D2B" },
-    other: { text: "#FFFFFF", background: "#16DBF5" },
-    send: { text: "#FFFFFF", background: "rgb(46, 212, 167)" },
+    feature: {text: "#FFFFFF", background: "#2ADE9E"},
+    bug: {text: "#FFFFFF", background: "#FF4D2B"},
+    other: {text: "#FFFFFF", background: "#16DBF5"},
+    send: {text: "#FFFFFF", background: "rgb(46, 212, 167)"},
     background: "#FFFFFF",
     disabledColor: "#C6C6C6",
     textColor: "black",
     borderColor: "transparent",
   };
 
-  return { ...defaultColor, ...colors };
+  return {...defaultColor, ...colors};
 }
 
 export default function FeedbackModal(props: Props) {
+  const strings = getStrings(props.strings)
   const [feedback, setFeedback] = React.useState("");
-  const [modalTitle, setModalTitle] = React.useState("Give feedback!");
-  const [feedbackButtonText, setFeedbackButtonText] =
-    React.useState("Send Feedback");
   const [state, setState] = React.useState<"ask" | "conclusion">("ask");
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState("" as ReactNode);
   const [feedbackType, setFeedbackType] = React.useState<FeedbackType>();
 
   const [identifier, setIdentifier] = React.useState(props.identifier);
@@ -67,8 +62,7 @@ export default function FeedbackModal(props: Props) {
       if (state === "conclusion") {
         setFeedback("");
         setState("ask");
-        setModalTitle("Give feedback!");
-        setFeedbackButtonText("Send Feedback");
+
         setFeedbackType(undefined);
         return;
       }
@@ -90,7 +84,8 @@ export default function FeedbackModal(props: Props) {
         window.location.pathname
       );
       if (result.status !== 200) {
-        throw new Error(result.statusText);
+        setError(strings.error);
+        console.error(result.statusText);
       }
 
       if (props.onFeedbackAdded) {
@@ -98,10 +93,8 @@ export default function FeedbackModal(props: Props) {
       }
 
       setState("conclusion");
-      setModalTitle("Thank you!");
-      setFeedbackButtonText("Another thing to say?");
     } catch (error) {
-      setError("An error occured, try again.");
+      setError(strings.error);
     }
     setIsLoading(false);
   }
@@ -141,9 +134,9 @@ export default function FeedbackModal(props: Props) {
           <div className="FF210xFF_reset FF210xFF_top">
             <p
               className="FF210xFF_reset FF210xFF_title"
-              style={{ color: widgetColor.textColor }}
+              style={{color: widgetColor.textColor}}
             >
-              {modalTitle}
+              {state === 'ask' ? strings.askTitle : strings.conclusionTitle}
             </p>
             <button
               className="FF210xFF_reset FF210xFF_closeButton"
@@ -167,9 +160,9 @@ export default function FeedbackModal(props: Props) {
             <>
               <p
                 className="FF210xFF_reset FF210xFF_subtitle"
-                style={{ color: widgetColor.textColor }}
+                style={{color: widgetColor.textColor}}
               >
-                What do you want to say?
+                {strings.askSubtitle}
               </p>
               <div className="FF210xFF_reset FF210xFF_buttons">
                 <button
@@ -182,8 +175,8 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("FEATURE")}
                 >
-                  <span style={{ color: widgetColor.feature.text }}>
-                    Feature
+                  <span style={{color: widgetColor.feature.text}}>
+                    {strings.feedbackTypes.feature}
                   </span>
                 </button>
 
@@ -197,7 +190,9 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("BUG")}
                 >
-                  <span style={{ color: widgetColor.bug.text }}>Bug</span>
+                  <span style={{color: widgetColor.bug.text}}>
+                    {strings.feedbackTypes.bug}
+                  </span>
                 </button>
                 <button
                   className="FF210xFF_reset FF210xFF_classificationButton"
@@ -209,7 +204,9 @@ export default function FeedbackModal(props: Props) {
                   }}
                   onClick={() => handleSetFeedbackType("OTHER")}
                 >
-                  <span style={{ color: widgetColor.other.text }}>Other</span>
+                  <span style={{color: widgetColor.other.text}}>
+                    {strings.feedbackTypes.other}
+                  </span>
                 </button>
               </div>
             </>
@@ -220,7 +217,7 @@ export default function FeedbackModal(props: Props) {
           <textarea
             id="FF210xFF_textAreaFeedback"
             placeholder={
-              feedbackType ? placeholderMap[feedbackType] : "I really ..."
+              feedbackType ? strings.textareaPlaceholders[feedbackType] : strings.textareaPlaceholders.DEFAULT
             }
             className="FF210xFF_reset FF210xFF_textArea"
             onKeyDown={handleKeyDown}
@@ -230,7 +227,7 @@ export default function FeedbackModal(props: Props) {
               borderColor: widgetColor.disabledColor,
               color: widgetColor.textColor,
             }}
-          ></textarea>
+          />
         )}
 
         {state === "ask" && !!props.identifierMode && (
@@ -248,7 +245,7 @@ export default function FeedbackModal(props: Props) {
             value={identifier}
             placeholder={
               props.identifierPlaceholder ||
-              "Your email to contact you if needed"
+              strings.userIdentificationInputPlaceholder
             }
             onChange={(e) => setIdentifier(e.target.value)}
           />
@@ -257,9 +254,9 @@ export default function FeedbackModal(props: Props) {
         {state === "conclusion" && (
           <p
             className="FF210xFF_reset FF210xFF_conclusion"
-            style={{ color: widgetColor.textColor }}
+            style={{color: widgetColor.textColor}}
           >
-            Your feedback has been received!
+            {strings.conclusionSubtitle}
           </p>
         )}
         {/* Footer */}
@@ -275,19 +272,19 @@ export default function FeedbackModal(props: Props) {
               style={{
                 backgroundColor: sendButtonBackgroundColor,
                 ...(isLoading
-                  ? { animation: "shrinkButton 0.4s ease-in-out forwards" }
-                  : { animation: "unshrinkButton 0.1s ease-in-out forwards" }),
+                  ? {animation: "shrinkButton 0.4s ease-in-out forwards"}
+                  : {animation: "unshrinkButton 0.1s ease-in-out forwards"}),
               }}
               onClick={handleSubmitFeedback}
             >
               <span
                 className="FF210xFF_reset FF210xFF_feedbackButtonText"
-                style={{ color: widgetColor.send.text }}
+                style={{color: widgetColor.send.text}}
               >
-                {!isLoading ? feedbackButtonText : ""}
+                {!isLoading ? (state === 'ask' ? strings.sendButton : strings.anotherFeedbackButton) : ""}
                 {isLoading && (
                   <div className="FF210xFF_reset FF210xFF_loadingContainer">
-                    <div className="FF210xFF_reset FF210xFF_loading"></div>
+                    <div className="FF210xFF_reset FF210xFF_loading"/>
                   </div>
                 )}
               </span>
