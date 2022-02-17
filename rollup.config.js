@@ -25,6 +25,11 @@ export default {
     resolve(),
     commonjs(),
     typescript({ useTsconfigDeclarationDir: true }),
-    postcss(),
+    postcss({
+      modules: {
+        generateScopedName: "[hash:base64:8]",
+      },
+      autoModules: true,
+    }),
   ],
 };
