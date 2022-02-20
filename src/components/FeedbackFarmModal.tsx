@@ -11,6 +11,9 @@ import BeetleImage from "./../images/beetle.png";
 // @ts-ignore
 import MonkeyImage from "./../images/monkey.png";
 
+// @ts-ignore
+import TadaImage from "./../images/tada.png";
+
 import classes from "./styles.module.css";
 
 type FeedbackType = "FEATURE" | "BUG" | "OTHER";
@@ -65,6 +68,8 @@ function FeedbackFarmModal(props: Props) {
     text: "#A7A7A7",
   });
 
+  const [step, setStep] = useState<"ask" | "conclusion">("ask");
+
   const placeholder = "It would be nice to ...";
 
   function handleSubmitForm(e: any) {
@@ -75,11 +80,13 @@ function FeedbackFarmModal(props: Props) {
     if (!feedbackText || !selectedType) {
       return;
     }
-    console.log("submit", feedbackText, selectedType);
 
     try {
       setIsSending(true);
       await sendFeedback(projectId, feedbackText, selectedType);
+      setStep("conclusion");
+      setFeedbackText("");
+      setSelectedType(undefined);
     } catch (error) {}
     setIsSending(false);
   }
@@ -112,6 +119,61 @@ function FeedbackFarmModal(props: Props) {
     });
   }
 
+  function renderFooter(buttonText: string, onClick: () => void, disabled) {
+    return (
+      <>
+        <button
+          type="submit"
+          disabled={disabled}
+          style={{ backgroundColor: buttonColor.button }}
+          className={classes.feedbackFarmModalSendButton}
+          onClick={onClick}
+        >
+          <span
+            style={{ color: buttonColor.text }}
+            className={classes.feedbackFarmModalSendButtonText}
+          >
+            {isSending ? (
+              <div className={classes.loadingContainer}>
+                <div className={classes.loading}></div>
+              </div>
+            ) : (
+              buttonText
+            )}
+          </span>
+        </button>
+        <span className={classes.feedbackFarmModalPoweredBy}>
+          Powered by{" "}
+          <a
+            className={classes.feedbackFarmModalPoweredByLink}
+            href="https://feedback.farm"
+          >
+            feedback.farm
+          </a>
+        </span>
+      </>
+    );
+  }
+
+  if (step === "conclusion") {
+    return (
+      <div
+        className={classes.feedbackFarmModalRoot}
+        style={{ backgroundColor: modalBackgroundColor }}
+      >
+        <Header title="Thank you!" onClose={onClose} />
+
+        <div className={classes.thankYou}>
+          <img src={TadaImage} className={classes.feedbackFarmTadaImage} />
+          <span className={classes.feedbackReceived}>
+            Your feedback has been received!
+          </span>
+        </div>
+
+        {renderFooter("Send another feedback", () => setStep("ask"), false)}
+      </div>
+    );
+  }
   return (
     <form
       onSubmit={handleSubmitForm}
@@ -169,36 +231,11 @@ function FeedbackFarmModal(props: Props) {
         onChange={handleTextChange}
       />
 
-      <button
-        type="submit"
-        disabled={feedbackText.length === 0 || !selectedType}
-        style={{ backgroundColor: buttonColor.button }}
-        className={classes.feedbackFarmModalSendButton}
-        onClick={handleSubmit}
-      >
-        <span
-          style={{ color: buttonColor.text }}
-          className={classes.feedbackFarmModalSendButtonText}
-        >
-          {isSending ? (
-            <div className={classes.loadingContainer}>
-              <div className={classes.loading}></div>
-            </div>
-          ) : (
-            "Send!"
-          )}
-        </span>
-      </button>
-
-      <span className={classes.feedbackFarmModalPoweredBy}>
-        Powered by{" "}
-        <a
-          className={classes.feedbackFarmModalPoweredByLink}
-          href="https://feedback.farm"
-        >
-          feedback.farm
-        </a>
-      </span>
+      {renderFooter(
+        "Send!",
+        handleSubmit,
+        feedbackText.length === 0 || !selectedType
+      )}
     </form>
   );
 }
