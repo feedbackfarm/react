@@ -70,7 +70,7 @@ function FeedbackFarmModal(props: Props) {
 
   const [step, setStep] = useState<"ask" | "conclusion">("ask");
 
-  const placeholder = "It would be nice to ...";
+  const [placeholder, setPlaceholder] = useState("I really ...");
 
   function handleSubmitForm(e: any) {
     e.preventDefault();
@@ -99,6 +99,14 @@ function FeedbackFarmModal(props: Props) {
 
   function handleSelectType(type: FeedbackType) {
     setSelectedType(type);
+
+    const message = {
+      FEATURE: "It would be nice ...",
+      BUG: "I have an issue with ...",
+      OTHER: "I have a suggestion for ...",
+    };
+
+    setPlaceholder(message[type]);
 
     if (feedbackText.length > 0) {
       return setButtonColor({ button: "#22c197", text: "#ffffff" });
@@ -146,7 +154,8 @@ function FeedbackFarmModal(props: Props) {
           Powered by{" "}
           <a
             className={classes.feedbackFarmModalPoweredByLink}
-            href="https://feedback.farm"
+            href="https://feedback.farm?ref=widget"
+            target="_blank"
           >
             feedback.farm
           </a>
@@ -174,6 +183,7 @@ function FeedbackFarmModal(props: Props) {
       </div>
     );
   }
+
   return (
     <form
       onSubmit={handleSubmitForm}
