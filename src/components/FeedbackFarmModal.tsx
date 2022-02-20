@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Header } from "./Header";
 
+import { sendFeedback } from "@feedbackfarm/core";
+
 // @ts-ignore
 import ZapImage from "./../images/zap.png";
 // @ts-ignore
@@ -11,41 +13,49 @@ import MonkeyImage from "./../images/monkey.png";
 
 import classes from "./styles.module.css";
 
+type FeedbackType = "FEATURE" | "BUG" | "OTHER";
+
 type Props = {
   onClose: () => void;
+  projectId: string;
 };
 
 function FeedbackType({
   image,
   typeBackgroundColor,
   type,
+  onClick,
+  isSelected,
 }: {
   image: React.ReactElement;
   typeBackgroundColor: string;
   type: string;
+  onClick: () => void;
+  isSelected: boolean;
 }) {
   return (
-    <div
-      className={classes.feedbackFarmModalType}
-      style={{ borderColor: "red" }}
-    >
+    <button onClick={onClick} className={classes.feedbackFarmModalType}>
       <div
-        style={{ backgroundColor: typeBackgroundColor }}
+        style={{
+          backgroundColor: typeBackgroundColor,
+          borderColor: isSelected ? "#d1d1d1" : "transparent",
+        }}
         className={classes.feedbackFarmModalTypeImageContainer}
       >
         {image}
       </div>
 
       <span className={classes.feedbackFarmModalTypeText}>{type}</span>
-    </div>
+    </button>
   );
 }
 
 function FeedbackFarmModal(props: Props) {
-  const { onClose } = props;
+  const { onClose, projectId } = props;
   const [feedbackText, setFeedbackText] = useState("");
   const [isSending, setIsSending] = useState(false);
 
+  const [selectedType, setSelectedType] = useState<FeedbackType>();
   const modalBackgroundColor = "#ffffff";
   const typeBackgroundColor = "#FCFBFA";
   const textAreaBorderColor = "#D1D1D1";
@@ -62,13 +72,14 @@ function FeedbackFarmModal(props: Props) {
   }
 
   async function handleSubmit() {
-    if (!feedbackText) {
+    if (!feedbackText || !selectedType) {
       return;
     }
-    console.log("submit", feedbackText);
+    console.log("submit", feedbackText, selectedType);
 
     try {
       setIsSending(true);
+      await sendFeedback(projectId, feedbackText, selectedType);
     } catch (error) {}
     setIsSending(false);
   }
@@ -79,11 +90,19 @@ function FeedbackFarmModal(props: Props) {
     }
   }
 
+  function handleSelectType(type: FeedbackType) {
+    setSelectedType(type);
+
+    if (feedbackText.length > 0) {
+      return setButtonColor({ button: "#22c197", text: "#ffffff" });
+    }
+  }
+
   function handleTextChange(e: any) {
     const text = e.target.value;
     setFeedbackText(text);
 
-    if (text.length > 0) {
+    if (text.length > 0 && selectedType) {
       return setButtonColor({ button: "#22c197", text: "#ffffff" });
     }
 
@@ -102,8 +121,10 @@ function FeedbackFarmModal(props: Props) {
       <Header title="Give feedback!" onClose={onClose} />
       <div className={classes.feedbackFarmModalTypeSelectorRoot}>
         <FeedbackType
+          onClick={() => handleSelectType("FEATURE")}
           typeBackgroundColor={typeBackgroundColor}
           type="Feature"
+          isSelected={selectedType === "FEATURE"}
           image={
             <img
               src={ZapImage}
@@ -113,8 +134,10 @@ function FeedbackFarmModal(props: Props) {
         />
 
         <FeedbackType
+          onClick={() => handleSelectType("BUG")}
           typeBackgroundColor={typeBackgroundColor}
           type="Bug"
+          isSelected={selectedType === "BUG"}
           image={
             <img
               src={BeetleImage}
@@ -124,8 +147,10 @@ function FeedbackFarmModal(props: Props) {
         />
 
         <FeedbackType
+          onClick={() => handleSelectType("OTHER")}
           typeBackgroundColor={typeBackgroundColor}
           type="Other"
+          isSelected={selectedType === "OTHER"}
           image={
             <img
               src={MonkeyImage}
@@ -146,7 +171,7 @@ function FeedbackFarmModal(props: Props) {
 
       <button
         type="submit"
-        disabled={feedbackText.length === 0}
+        disabled={feedbackText.length === 0 || !selectedType}
         style={{ backgroundColor: buttonColor.button }}
         className={classes.feedbackFarmModalSendButton}
         onClick={handleSubmit}

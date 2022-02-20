@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <FeedbackFarm>
+      <FeedbackFarm projectId="STw0dcqk4mvMIhqTtw2h">
         <span>Give Feedback</span>
       </FeedbackFarm>
     </div>

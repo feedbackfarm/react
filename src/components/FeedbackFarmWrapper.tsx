@@ -6,6 +6,7 @@ import classes from "./styles.module.css";
 
 type Props = {
   children?: JSX.Element;
+  projectId: string;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -25,6 +26,7 @@ function useOutsideAlerter(ref: any, onClose: () => void) {
 }
 
 function FeedbackFarmWrapper(props: Props) {
+  const { children, projectId } = props;
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
@@ -42,7 +44,7 @@ function FeedbackFarmWrapper(props: Props) {
   return (
     <div ref={wrapperRef}>
       <div ref={setReferenceElement} onClick={() => setIsModalVisible(true)}>
-        {props.children}
+        {children}
       </div>
 
       {isModalVisible && (
@@ -52,7 +54,7 @@ function FeedbackFarmWrapper(props: Props) {
           style={{ ...styles.popper, zIndex: 9999 }}
           {...attributes.popper}
         >
-          <FeedbackFarmModal onClose={handleClose} />
+          <FeedbackFarmModal onClose={handleClose} projectId={projectId} />
         </div>
       )}
     </div>
