@@ -1,3 +1,3 @@
-import FeedbackFarm from "./components/FeedbackFarm";
+import FeedbackFarmWrapper from "./components/FeedbackFarmWrapper";
 
-export { FeedbackFarm };
+export { FeedbackFarmWrapper as FeedbackFarm };
