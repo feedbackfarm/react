@@ -372,8 +372,8 @@ export { FeedbackFarmModal };
 /**
  * TODO
  *
- * Demander email
  * Animation sending feedback
  * Updater Readme
+ * tester avec et sans email
  * Publish
  */
