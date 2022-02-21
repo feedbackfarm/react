@@ -2,7 +2,7 @@
 
 .feedbackFarmModalRoot {
   width: 250px;
-  padding: 10px;
+  padding: 15px;
   filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.25));
   border-radius: 21px;
   transition: all 0.5s linear;
@@ -81,7 +81,6 @@
 }
 
 .feedbackFarmModalSendButton {
-  margin-top: 10px;
   border: none;
   cursor: pointer;
   padding: 8px 5px;
@@ -89,6 +88,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 60px;
+  width: 100%;
 }
 
 .feedbackFarmModalSendButtonText {
@@ -322,4 +323,24 @@
   /* basic modern patch */
   all: initial;
   all: unset;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.footerEmailInput {
+  border-radius: 10px;
+  padding: 5px 10px;
+  box-shadow: none;
+  border: 1px solid;
+  min-width: 160px;
+}
+
+.footerIdentifier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
