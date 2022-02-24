@@ -289,7 +289,17 @@ function FeedbackFarmModal(props: Props) {
           </span>
         </div>
 
-        {renderFooter("Send another feedback", () => setStep("ask"), false)}
+        {renderFooter(
+          "Send another feedback",
+          () => {
+            setButtonColorState({
+              button: buttonDisabledColor,
+              text: buttonTextDisabledColor,
+            });
+            setStep("ask");
+          },
+          false
+        )}
       </div>
     );
   }
@@ -368,11 +378,3 @@ function FeedbackFarmModal(props: Props) {
 }
 
 export { FeedbackFarmModal };
-
-/**
- * TODO
- *
- * Updater Readme
- * tester avec et sans email
- * Publish
- */

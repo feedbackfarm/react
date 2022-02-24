@@ -1,9 +1,10 @@
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "@rollup/plugin-node-resolve";
+import autoprefixer from "autoprefixer";
 import commonjs from "@rollup/plugin-commonjs";
-import typescript from "rollup-plugin-typescript2";
-import postcss from "rollup-plugin-postcss";
 import image from "@rollup/plugin-image";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import postcss from "rollup-plugin-postcss";
+import resolve from "@rollup/plugin-node-resolve";
+import typescript from "rollup-plugin-typescript2";
 
 const packageJson = require("./package.json");
 
@@ -31,6 +32,7 @@ export default {
         generateScopedName: "[hash:base64:8]",
       },
       autoModules: true,
+      plugins: [autoprefixer()],
     }),
     image(),
   ],
