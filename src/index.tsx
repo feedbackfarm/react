@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { usePopper } from "react-popper";
-import FeedbackModal, { Colors, IdentifierMode } from "./FeedbackModal";
+import { usePopper } from 'react-popper';
+import FeedbackModal, { Colors, IdentifierMode } from './FeedbackModal';
 
 type Props = {
   children: React.ReactNode;
@@ -24,9 +24,9 @@ function useOutsideAlerter(ref: any, onClose: () => void) {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
 }
@@ -38,7 +38,7 @@ function FeedbackFarm(props: Props) {
   const [popperRef, setPopperRef] = React.useState(null);
 
   const { styles, attributes } = usePopper(referenceRef, popperRef, {
-    placement: "auto",
+    placement: 'auto',
   });
 
   const wrapperRef = React.useRef(null);
@@ -64,7 +64,7 @@ function FeedbackFarm(props: Props) {
         // @ts-ignore
         ref={setReferenceRef}
         onClick={handleOpen}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: 'pointer' }}
       >
         {props.children}
       </div>
@@ -76,7 +76,7 @@ function FeedbackFarm(props: Props) {
           minWidth: 300,
           minHeight: 230,
           zIndex: 9999,
-          ...(!visible ? { pointerEvents: "none" } : {}),
+          ...(!visible ? { pointerEvents: 'none' } : {}),
         }}
         {...attributes.popper}
       >

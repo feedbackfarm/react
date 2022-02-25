@@ -1,7 +1,7 @@
-import React from "react";
-import "./App.css";
+import React from 'react';
+import './App.css';
 
-import Feedback from "@feedbackfarm/react";
+import Feedback from '@feedbackfarm/react';
 
 function App() {
   return (
