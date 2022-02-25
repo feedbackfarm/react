@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePopper } from 'react-popper';
+import { Strings } from '../utils/getStrings';
 
 import { Colors, FeedbackFarmModal, IdentifierMode } from './FeedbackFarmModal';
 import classes from './styles.module.css';
@@ -26,6 +27,7 @@ type Props = {
   onFeedbackAdded?: () => void;
   onOpen?: () => void;
   projectId: string;
+  strings?: Strings;
   theme?: 'light' | 'dark';
 };
 
@@ -81,6 +83,7 @@ function FeedbackFarmWrapper(props: Props) {
     onFeedbackAdded,
     onOpen,
     projectId,
+    strings,
     theme,
   } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -126,6 +129,7 @@ function FeedbackFarmWrapper(props: Props) {
             onClose={handleClose}
             onFeedbackAdded={onFeedbackAdded}
             projectId={projectId}
+            strings={strings}
             colors={{
               ...(theme === 'light'
                 ? defaultColors

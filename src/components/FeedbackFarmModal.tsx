@@ -15,6 +15,7 @@ import MonkeyImage from './../images/monkey.png';
 import TadaImage from './../images/tada.png';
 
 import classes from './styles.module.css';
+import { getStrings, Strings } from '../utils/getStrings';
 
 type FeedbackType = 'FEATURE' | 'BUG' | 'OTHER';
 
@@ -39,6 +40,7 @@ type Props = {
   projectId: string;
   colors: Colors;
   identifierMode?: IdentifierMode;
+  strings?: Strings;
 };
 
 function FeedbackType({
@@ -90,9 +92,8 @@ function FeedbackFarmModal(props: Props) {
   const [feedbackText, setFeedbackText] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [identifier, setIdentifier] = useState(_identifier);
-
+  const strings = getStrings(props.strings);
   const askIdentifierMode = identifierMode;
-
   const {
     buttonColor,
     buttonDisabledColor,
@@ -115,7 +116,9 @@ function FeedbackFarmModal(props: Props) {
 
   const [step, setStep] = useState<'ask' | 'conclusion'>('ask');
 
-  const [placeholder, setPlaceholder] = useState('I really ...');
+  const [placeholder, setPlaceholder] = useState(
+    strings.textareaPlaceholders.DEFAULT
+  );
 
   function handleSubmitForm(e: any) {
     e.preventDefault();
@@ -145,7 +148,9 @@ function FeedbackFarmModal(props: Props) {
       if (onFeedbackAdded) {
         onFeedbackAdded();
       }
-    } catch (error) {}
+    } catch (error) {
+      alert(strings.error);
+    }
     setIsSending(false);
   }
 
@@ -159,9 +164,9 @@ function FeedbackFarmModal(props: Props) {
     setSelectedType(type);
 
     const message = {
-      FEATURE: 'It would be nice ...',
-      BUG: 'I have an issue with ...',
-      OTHER: 'I have a suggestion for ...',
+      FEATURE: strings.textareaPlaceholders.FEATURE,
+      BUG: strings.textareaPlaceholders.BUG,
+      OTHER: strings.textareaPlaceholders.OTHER,
     };
 
     setPlaceholder(message[type]);
@@ -222,7 +227,7 @@ function FeedbackFarmModal(props: Props) {
             <>
               <input
                 className={classes.footerEmailInput}
-                placeholder="Email"
+                placeholder={strings.userIdentificationInputPlaceholder}
                 style={{
                   borderColor: textAreaBorderColor,
                   color: textColor,
@@ -258,7 +263,7 @@ function FeedbackFarmModal(props: Props) {
           className={classes.feedbackFarmModalPoweredBy}
           style={{ color: textColor }}
         >
-          Powered by{' '}
+          {strings.poweredBy}
           <a
             className={classes.feedbackFarmModalPoweredByLink}
             href="https://feedback.farm?ref=widget"
@@ -277,7 +282,11 @@ function FeedbackFarmModal(props: Props) {
         className={classes.feedbackFarmModalRoot}
         style={{ backgroundColor: modalBackgroundColor }}
       >
-        <Header title="Thank you!" onClose={onClose} textColor={textColor} />
+        <Header
+          title={strings.conclusionTitle}
+          onClose={onClose}
+          textColor={textColor}
+        />
 
         <div className={classes.thankYou}>
           <img src={TadaImage} className={classes.feedbackFarmTadaImage} />
@@ -285,12 +294,12 @@ function FeedbackFarmModal(props: Props) {
             className={classes.feedbackReceived}
             style={{ color: textColor }}
           >
-            Your feedback has been received!
+            {strings.conclusionSubtitle}
           </span>
         </div>
 
         {renderFooter(
-          'Send another feedback',
+          strings.anotherFeedback,
           () => {
             setButtonColorState({
               button: buttonDisabledColor,
@@ -310,12 +319,16 @@ function FeedbackFarmModal(props: Props) {
       className={classes.feedbackFarmModalRoot}
       style={{ backgroundColor: modalBackgroundColor }}
     >
-      <Header title="Give feedback!" textColor={textColor} onClose={onClose} />
+      <Header
+        title={strings.askTitle}
+        textColor={textColor}
+        onClose={onClose}
+      />
       <div className={classes.feedbackFarmModalTypeSelectorRoot}>
         <FeedbackType
           onClick={() => handleSelectType('FEATURE')}
           typeBackgroundColor={typeBackgroundColor}
-          type="Feature"
+          type={strings.feedbackTypes.feature}
           isSelected={selectedType === 'FEATURE'}
           textColor={textColor}
           image={
@@ -329,7 +342,7 @@ function FeedbackFarmModal(props: Props) {
         <FeedbackType
           onClick={() => handleSelectType('BUG')}
           typeBackgroundColor={typeBackgroundColor}
-          type="Bug"
+          type={strings.feedbackTypes.bug}
           isSelected={selectedType === 'BUG'}
           textColor={textColor}
           image={
@@ -343,7 +356,7 @@ function FeedbackFarmModal(props: Props) {
         <FeedbackType
           onClick={() => handleSelectType('OTHER')}
           typeBackgroundColor={typeBackgroundColor}
-          type="Other"
+          type={strings.feedbackTypes.other}
           isSelected={selectedType === 'OTHER'}
           textColor={textColor}
           image={
@@ -369,7 +382,7 @@ function FeedbackFarmModal(props: Props) {
       />
 
       {renderFooter(
-        'Send!',
+        strings.send,
         handleSubmit,
         feedbackText.length === 0 || !selectedType
       )}
