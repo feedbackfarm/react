@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
-import { Strings } from '../utils/getStrings';
+import { Placement } from '@popperjs/core';
+import { createPortal } from 'react-dom';
 
 import { Colors, FeedbackFarmModal, IdentifierMode } from './FeedbackFarmModal';
+import { Strings } from '../utils/getStrings';
+
 import classes from './styles.module.css';
 
 type UndefinedColors = {
@@ -29,12 +32,14 @@ type Props = {
   projectId: string;
   strings?: Strings;
   theme?: 'light' | 'dark';
+  placement?: Placement;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
 function useOutsideAlerter(ref: any, onClose: () => void) {
   React.useEffect(() => {
     function handleClickOutside(event: any) {
+      console.log(event.target);
       if (ref.current && !ref.current.contains(event.target)) {
         onClose();
       }
@@ -90,7 +95,7 @@ function FeedbackFarmWrapper(props: Props) {
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: 'auto',
+    placement: props.placement || 'auto',
   });
 
   const wrapperRef = React.useRef(null);
@@ -111,38 +116,64 @@ function FeedbackFarmWrapper(props: Props) {
   }
 
   return (
-    <div ref={wrapperRef}>
+    <div>
       <div ref={setReferenceElement} onClick={handleOpen}>
         {children}
       </div>
 
       {isModalVisible && (
-        <div
-          className={classes.resetStyle}
-          ref={setPopperElement}
-          style={{ ...styles.popper, zIndex: 9999 }}
-          {...attributes.popper}
-        >
-          <FeedbackFarmModal
-            identifier={identifier}
-            identifierMode={identifierMode}
-            onClose={handleClose}
-            onFeedbackAdded={onFeedbackAdded}
-            projectId={projectId}
-            strings={strings}
-            colors={{
-              ...(theme === 'light'
-                ? defaultColors
-                : !!theme
-                ? darkColors
-                : defaultColors),
-              ...colors,
-            }}
-          />
-        </div>
+        <ModalPortal>
+          <div ref={wrapperRef}>
+            <div
+              id="FeedbackFarmModalPortal"
+              className={classes.resetStyle}
+              ref={setPopperElement}
+              style={styles.popper}
+              {...attributes.popper}
+            >
+              <FeedbackFarmModal
+                identifier={identifier}
+                identifierMode={identifierMode}
+                onClose={handleClose}
+                onFeedbackAdded={onFeedbackAdded}
+                projectId={projectId}
+                strings={strings}
+                colors={{
+                  ...(theme === 'light'
+                    ? defaultColors
+                    : !!theme
+                    ? darkColors
+                    : defaultColors),
+                  ...colors,
+                }}
+              />
+            </div>
+          </div>
+        </ModalPortal>
       )}
     </div>
   );
 }
+
+const ModalPortal = (props: any) => {
+  const [wrapperDiv, setWrapperDiv] = useState(
+    undefined as HTMLDivElement | undefined
+  );
+  useEffect(() => {
+    const wrapperDiv = document.createElement('div');
+    document.body.append(wrapperDiv);
+    wrapperDiv.className = classes.modalPortal;
+    setWrapperDiv(wrapperDiv);
+    return () => {
+      document.body.removeChild(wrapperDiv);
+    };
+  }, []);
+
+  if (!wrapperDiv) {
+    return <></>;
+  }
+
+  return createPortal(props.children, wrapperDiv);
+};
 
 export default FeedbackFarmWrapper;

@@ -14,8 +14,9 @@ import MonkeyImage from './../images/monkey.png';
 // @ts-ignore
 import TadaImage from './../images/tada.png';
 
-import classes from './styles.module.css';
 import { getStrings, Strings } from '../utils/getStrings';
+
+import classes from './styles.module.css';
 
 type FeedbackType = 'FEATURE' | 'BUG' | 'OTHER';
 
