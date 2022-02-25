@@ -1,3 +1,4 @@
+import React from 'react';
 import { FeedbackFarm } from '@feedbackfarm/react';
 import './App.css';
 
