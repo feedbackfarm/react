@@ -4,15 +4,15 @@ import { Header } from './Header';
 import { sendFeedback } from '@feedbackfarm/core';
 
 // @ts-ignore
-import ZapImage from './../images/zap.png';
+import ZapImage from './../images/zap.svg';
 // @ts-ignore
-import BeetleImage from './../images/beetle.png';
+import BeetleImage from './../images/bug.svg';
 
 // @ts-ignore
-import MonkeyImage from './../images/monkey.png';
+import MonkeyImage from './../images/monkey.svg';
 
 // @ts-ignore
-import TadaImage from './../images/tada.png';
+import TadaImage from './../images/party.svg';
 
 import { getStrings, Strings } from '../utils/getStrings';
 
