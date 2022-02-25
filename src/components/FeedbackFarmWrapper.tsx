@@ -40,7 +40,6 @@ type Props = {
 function useOutsideAlerter(ref: any, onClose: () => void) {
   React.useEffect(() => {
     function handleClickOutside(event: any) {
-      console.log(event.target);
       if (ref.current && !ref.current.contains(event.target)) {
         onClose();
       }

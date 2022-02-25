@@ -7,6 +7,7 @@
   border-radius: 21px;
   transition: all 0.5s linear;
   min-width: 246px;
+  box-sizing: content-box;
 }
 
 .feedbackFarmModalTypeSelectorRoot {
@@ -79,6 +80,8 @@
   height: 50px;
   padding: 10px;
   resize: none;
+  font-size: 14px;
+  box-sizing: content-box;
 }
 
 .feedbackFarmModalSendButton {
