@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { CloseSvg } from "../svg/close";
+import { CloseSvg } from '../svg/close';
 
-import classes from "./styles.module.css";
+import classes from './styles.module.css';
 
 type Props = {
   title: string;

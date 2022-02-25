@@ -1,5 +1,5 @@
-import { FeedbackFarm } from "@feedbackfarm/react";
-import "./App.css";
+import { FeedbackFarm } from '@feedbackfarm/react';
+import './App.css';
 
 function App() {
   return (

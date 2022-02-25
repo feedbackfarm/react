@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { usePopper } from "react-popper";
+import React, { useState } from 'react';
+import { usePopper } from 'react-popper';
 
-import { Colors, FeedbackFarmModal, IdentifierMode } from "./FeedbackFarmModal";
-import classes from "./styles.module.css";
+import { Colors, FeedbackFarmModal, IdentifierMode } from './FeedbackFarmModal';
+import classes from './styles.module.css';
 
 type UndefinedColors = {
   buttonColor?: string;
@@ -26,7 +26,7 @@ type Props = {
   onFeedbackAdded?: () => void;
   onOpen?: () => void;
   projectId: string;
-  theme?: "light" | "dark";
+  theme?: 'light' | 'dark';
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -38,37 +38,37 @@ function useOutsideAlerter(ref: any, onClose: () => void) {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
 }
 
 const defaultColors: Colors = {
-  buttonColor: "#22c197",
-  buttonDisabledColor: "#D1D1D1",
-  buttonTextColor: "#ffffff",
-  buttonTextDisabledColor: "#A7A7A7",
-  modalBackgroundColor: "#ffffff",
-  textAreaBackgroundColor: "#FFFFFF",
-  textAreaBorderColor: "#D1D1D1",
-  textAreaColor: "#000000",
-  textColor: "#000000",
-  typeBackgroundColor: "#FCFBFA",
+  buttonColor: '#22c197',
+  buttonDisabledColor: '#D1D1D1',
+  buttonTextColor: '#ffffff',
+  buttonTextDisabledColor: '#A7A7A7',
+  modalBackgroundColor: '#ffffff',
+  textAreaBackgroundColor: '#FFFFFF',
+  textAreaBorderColor: '#D1D1D1',
+  textAreaColor: '#000000',
+  textColor: '#000000',
+  typeBackgroundColor: '#FCFBFA',
 };
 
 const darkColors: Colors = {
-  buttonColor: "#22c197",
-  buttonDisabledColor: "#646464",
-  buttonTextColor: "#ffffff",
-  buttonTextDisabledColor: "#A7A7A7",
-  modalBackgroundColor: "#111111",
-  textAreaBackgroundColor: "#111111",
-  textAreaBorderColor: "#525252",
-  textAreaColor: "#ffffff",
-  textColor: "#ffffff",
-  typeBackgroundColor: "#000000",
+  buttonColor: '#22c197',
+  buttonDisabledColor: '#646464',
+  buttonTextColor: '#ffffff',
+  buttonTextDisabledColor: '#A7A7A7',
+  modalBackgroundColor: '#111111',
+  textAreaBackgroundColor: '#111111',
+  textAreaBorderColor: '#525252',
+  textAreaColor: '#ffffff',
+  textColor: '#ffffff',
+  typeBackgroundColor: '#000000',
 };
 
 function FeedbackFarmWrapper(props: Props) {
@@ -87,7 +87,7 @@ function FeedbackFarmWrapper(props: Props) {
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: "auto",
+    placement: 'auto',
   });
 
   const wrapperRef = React.useRef(null);
@@ -127,7 +127,7 @@ function FeedbackFarmWrapper(props: Props) {
             onFeedbackAdded={onFeedbackAdded}
             projectId={projectId}
             colors={{
-              ...(theme === "light"
+              ...(theme === 'light'
                 ? defaultColors
                 : !!theme
                 ? darkColors
