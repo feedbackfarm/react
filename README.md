@@ -2,17 +2,13 @@
 
 Feedback Farm widget
 
-Require a [Feedback Farm](https://feedback.farm) account
+Require a [Feedback Farm](https://feedback.farm/?ref=readme) account
 
 Embed a small widget into your web application to start getting user feedback.
 
-# Demos
-
-- [Code Sandbox](https://codesandbox.io/s/feedbackfarm-react-bsklw)
-
 # Usage
 
-1. Create a project on the [feedback.farm](https://feedback.farm) platform and then grab the project id.
+1. Create a project on the [feedback.farm](https://feedback.farm/?ref=readme) platform and then grab the project id.
 
 2. `npm install @feedbackfarm/react`
 
@@ -22,7 +18,7 @@ Embed a small widget into your web application to start getting user feedback.
 // index.jsx
 import FeedbackFarm from "@feedbackfarm/react";
 
-<FeedbackFarm projectId="replace_with_your_project_id" identifier="your_user_identifier">
+<FeedbackFarm projectId="replace_with_your_project_id">
   <span>
     Give Feedback
   </span>
@@ -31,36 +27,88 @@ import FeedbackFarm from "@feedbackfarm/react";
 
 ### Parameters
 
-| Parameters              |      Type      | Description                                                             | Required |
-| ----------------------- | :------------: | :---------------------------------------------------------------------- | :------: |
-| `projectId`             |     string     | Project identifier available on [feedback.farm](feedback.farm) platform |    ✅    |
-| `identifier`            |     string     | User identifier (email, id, ...)                                        |          |
-| `onClose`               |    function    | Called when widget is closed                                            |          |
-| `onFeedbackAdded`       |    function    | Called when a feedback has been added                                   |          |
-| `onOpen`                |    function    | Called when widget modal is open                                        |          |
-| `colors`                |     Colors     | Change widget colors (see below)                                        |          |
-| `identifierMode`        | IdentifierMode | See below                                                               |          |
-| `identifierPlaceholder` |     string     | The input placeholder (require `identifierMode`)                        |          |
+| Parameters        |         Type         | Description                                                             | Required |
+| ----------------- | :------------------: | :---------------------------------------------------------------------- | :------: |
+| `projectId`       |        string        | Project identifier available on [feedback.farm](feedback.farm) platform |    ✅    |
+| `colors`          |        Colors        | Customize widget colors (see below)                                     |
+| `identifier`      |        string        | User identifier (email, id, ...)                                        |          |
+| `identifierMode`  |    IdentifierMode    | Ask user email (see below)                                              |          |
+| `onClose`         |       function       | Called when the widget is closed                                        |          |
+| `onFeedbackAdded` |       function       | Called when a feedback has been added                                   |          |
+| `onOpen`          |       function       | Called when the widget is being open                                    |
+| `theme`           | `light` / `optional` | Use widget color for light or theme mode                                |          |
+| `placement`       |      Placement       | Modal placement (see below)                                             |          |
+| `strings`         |       Strings        | Widget translation (see below)                                          |          |
 
 ### Colors
 
+You can overwrite any of the following colors:
+
 ```
 {
-  feature?: { text: string; background: string };
-  bug?: { text: string; background: string };
-  other?: { text: string; background: string };
-  send?: { text: string; background: string };
-  background?: string;
-  disabledColor?: string;
-  borderColor?: string;
+  buttonColor: string,
+  buttonColor: string;
+  buttonDisabledColor: string;
+  buttonTextColor: string;
+  buttonTextDisabledColor: string;
+  modalBackgroundColor: string;
+  textAreaBackgroundColor: string;
+  textAreaBorderColor: string;
+  textAreaColor: string;
+  textColor: string;
+  typeBackgroundColor: string;
 }
 ```
 
 ### IdentifierMode
 
 ```
-required = user is required to provide an identifier (email, id, ...)
-optional = user is not force to provide an identifier
+required = user is required to provide an email
+optional = user is not optionally ask to provide an email
 ```
 
 Full [documentation](https://www.notion.so/Embed-Widget-In-Your-React-Website-6feaf05619c4461d832c7c685c664c33)
+
+### Placement
+
+- top
+- bottom
+- right
+- left
+- auto
+- auto-start
+- auto-end
+- top-start
+- top-end
+- bottom-start
+- bottom-end"
+- right-start"
+- right-end"
+- left-start"
+- left-end
+
+### Strings
+
+```
+{
+  askTitle?: string;
+  send?: string;
+  conclusionTitle?: string;
+  conclusionSubtitle?: string;
+  anotherFeedback?: string;
+  error?: string;
+  userIdentificationInputPlaceholder?: string;
+  textareaPlaceholders?: {
+    BUG?: string;
+    FEATURE?: string;
+    OTHER?: string;
+    DEFAULT?: string;
+  };
+  feedbackTypes?: {
+    FEATURE?: string;
+    BUG?: string;
+    OTHER?: string;
+  };
+  poweredBy?: string;
+}
+```

@@ -1,18 +1,13 @@
 import React from 'react';
+import { FeedbackFarm } from '@feedbackfarm/react';
 import './App.css';
-
-import Feedback from '@feedbackfarm/react';
 
 function App() {
   return (
     <div className="App">
-      <Feedback
-        projectId="atdCdWpgjIDLJMg3yI6s"
-        identifier="anonymous"
-        identifierMode="required"
-      >
+      <FeedbackFarm projectId="STw0dcqk4mvMIhqTtw2h">
         <span>Give Feedback</span>
-      </Feedback>
+      </FeedbackFarm>
     </div>
   );
 }
