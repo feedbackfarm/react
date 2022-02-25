@@ -19,6 +19,7 @@ type UndefinedColors = {
   textAreaColor?: string;
   textColor?: string;
   typeBackgroundColor?: string;
+  modalBorderColor?: string;
 };
 
 type Props = {
@@ -63,6 +64,7 @@ const defaultColors: Colors = {
   textAreaColor: '#000000',
   textColor: '#000000',
   typeBackgroundColor: '#FCFBFA',
+  modalBorderColor: 'transparent',
 };
 
 const darkColors: Colors = {
@@ -76,6 +78,7 @@ const darkColors: Colors = {
   textAreaColor: '#ffffff',
   textColor: '#ffffff',
   typeBackgroundColor: '#000000',
+  modalBorderColor: '#525252',
 };
 
 function FeedbackFarmWrapper(props: Props) {

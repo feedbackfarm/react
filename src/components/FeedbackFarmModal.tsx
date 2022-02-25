@@ -22,6 +22,7 @@ type FeedbackType = 'FEATURE' | 'BUG' | 'OTHER';
 
 export type IdentifierMode = 'required' | 'optional';
 export type Colors = {
+  modalBorderColor: string;
   modalBackgroundColor: string;
   typeBackgroundColor: string;
   textAreaBorderColor: string;
@@ -318,7 +319,10 @@ function FeedbackFarmModal(props: Props) {
     <form
       onSubmit={handleSubmitForm}
       className={classes.feedbackFarmModalRoot}
-      style={{ backgroundColor: modalBackgroundColor }}
+      style={{
+        backgroundColor: modalBackgroundColor,
+        border: `1px solid ${colors.modalBorderColor}`,
+      }}
     >
       <Header
         title={strings.askTitle}
