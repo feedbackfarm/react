@@ -31,6 +31,7 @@ type Props = {
   onFeedbackAdded?: () => void;
   onOpen?: () => void;
   projectId: string;
+  stayOpen?: boolean;
   strings?: Strings;
   theme?: 'light' | 'dark';
   placement?: Placement;
@@ -90,10 +91,11 @@ function FeedbackFarmWrapper(props: Props) {
     onFeedbackAdded,
     onOpen,
     projectId,
+    stayOpen,
     strings,
     theme,
   } = props;
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(!!stayOpen);
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
@@ -104,6 +106,10 @@ function FeedbackFarmWrapper(props: Props) {
   useOutsideAlerter(wrapperRef, () => handleClose());
 
   function handleClose() {
+    if (stayOpen) {
+      return;
+    }
+
     setIsModalVisible(false);
     if (onClose) {
       onClose();
@@ -140,6 +146,7 @@ function FeedbackFarmWrapper(props: Props) {
                 onFeedbackAdded={onFeedbackAdded}
                 projectId={projectId}
                 strings={strings}
+                stayOpen={stayOpen}
                 colors={{
                   ...(theme === 'light'
                     ? defaultColors

@@ -42,6 +42,7 @@ type Props = {
   projectId: string;
   colors: Colors;
   identifierMode?: IdentifierMode;
+  stayOpen?: boolean;
   strings?: Strings;
 };
 
@@ -90,6 +91,7 @@ function FeedbackFarmModal(props: Props) {
     onClose,
     onFeedbackAdded,
     projectId,
+    stayOpen,
   } = props;
   const [feedbackText, setFeedbackText] = useState('');
   const [isSending, setIsSending] = useState(false);
