@@ -293,7 +293,11 @@ function FeedbackFarmModal(props: Props) {
         />
 
         <div className={classes.thankYou}>
-          <img src={TadaImage} className={classes.feedbackFarmTadaImage} />
+          <img
+            src={TadaImage}
+            className={classes.feedbackFarmTadaImage}
+            alt="Tada"
+          />
           <span
             className={classes.feedbackReceived}
             style={{ color: textColor }}
@@ -340,6 +344,7 @@ function FeedbackFarmModal(props: Props) {
           textColor={textColor}
           image={
             <img
+              alt="Feature"
               src={ZapImage}
               className={classes.feedbackFarmModalTypeLightning}
             />
@@ -354,6 +359,7 @@ function FeedbackFarmModal(props: Props) {
           textColor={textColor}
           image={
             <img
+              alt="Bug"
               src={BeetleImage}
               className={classes.feedbackFarmModalTypeBeetle}
             />
@@ -368,6 +374,7 @@ function FeedbackFarmModal(props: Props) {
           textColor={textColor}
           image={
             <img
+              alt="Other"
               src={MonkeyImage}
               className={classes.feedbackFarmModalTypeMonkey}
             />

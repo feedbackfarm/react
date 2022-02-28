@@ -18,7 +18,11 @@ function Header(props: Props) {
       <h1 className={classes.headerTitle} style={{ color: textColor }}>
         {title}
       </h1>
-      <button className={classes.headerCloseButton} onClick={onClose}>
+      <button
+        className={classes.headerCloseButton}
+        onClick={onClose}
+        aria-label="Close"
+      >
         <CloseSvg />
       </button>
     </div>
