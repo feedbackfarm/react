@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <FeedbackFarm projectId="STw0dcqk4mvMIhqTtw2h" stayOpen>
+      <FeedbackFarm projectId="STw0dcqk4mvMIhqTtw2h" stayOpen bindLogs>
         <span>Give Feedback</span>
       </FeedbackFarm>
     </div>

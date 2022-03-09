@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './Header';
+import { bindLogs as BindLogs } from '../utils/bindLogs';
 
 import { sendFeedback } from '@feedbackfarm/core';
 
@@ -36,13 +37,13 @@ export type Colors = {
 };
 
 type Props = {
+  bindLogs?: boolean;
   identifier?: string;
   onClose: () => void;
   onFeedbackAdded?: () => void;
   projectId: string;
   colors: Colors;
   identifierMode?: IdentifierMode;
-  stayOpen?: boolean;
   strings?: Strings;
 };
 
@@ -85,13 +86,13 @@ function FeedbackType({
 
 function FeedbackFarmModal(props: Props) {
   const {
+    bindLogs,
     colors,
     identifier: _identifier,
     identifierMode,
     onClose,
     onFeedbackAdded,
     projectId,
-    stayOpen,
   } = props;
   const [feedbackText, setFeedbackText] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -124,6 +125,12 @@ function FeedbackFarmModal(props: Props) {
     strings.textareaPlaceholders.DEFAULT
   );
 
+  useEffect(() => {
+    if (bindLogs) {
+      BindLogs();
+    }
+  }, [bindLogs]);
+
   function handleSubmitForm(e: any) {
     e.preventDefault();
   }
@@ -144,7 +151,15 @@ function FeedbackFarmModal(props: Props) {
 
     try {
       setIsSending(true);
-      await sendFeedback(projectId, feedbackText, selectedType, identifier);
+      await sendFeedback(
+        projectId,
+        feedbackText,
+        selectedType,
+        identifier,
+        undefined,
+        // @ts-ignore
+        bindLogs ? console.everything : []
+      );
       setStep('conclusion');
       setFeedbackText('');
       setSelectedType(undefined);

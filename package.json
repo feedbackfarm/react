@@ -42,7 +42,7 @@
     "react-dom": ">=17.0.2"
   },
   "dependencies": {
-    "@feedbackfarm/core": "^1.0.12",
+    "@feedbackfarm/core": "^1.0.13",
     "@popperjs/core": "^2.11.2",
     "react-popper": "^2.2.5"
   }

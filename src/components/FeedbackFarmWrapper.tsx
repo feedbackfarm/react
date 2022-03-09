@@ -35,6 +35,7 @@ type Props = {
   strings?: Strings;
   theme?: 'light' | 'dark';
   placement?: Placement;
+  bindLogs?: boolean;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -83,6 +84,7 @@ const darkColors: Colors = {
 
 function FeedbackFarmWrapper(props: Props) {
   const {
+    bindLogs,
     children,
     colors,
     identifier,
@@ -140,13 +142,13 @@ function FeedbackFarmWrapper(props: Props) {
               {...attributes.popper}
             >
               <FeedbackFarmModal
+                bindLogs={bindLogs}
                 identifier={identifier}
                 identifierMode={identifierMode}
                 onClose={handleClose}
                 onFeedbackAdded={onFeedbackAdded}
                 projectId={projectId}
                 strings={strings}
-                stayOpen={stayOpen}
                 colors={{
                   ...(theme === 'light'
                     ? defaultColors
