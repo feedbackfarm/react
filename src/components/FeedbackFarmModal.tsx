@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from './Header';
-import { bindLogs as BindLogs } from '../utils/bindLogs';
 
 import { sendFeedback } from '@feedbackfarm/core';
 
@@ -37,7 +36,6 @@ export type Colors = {
 };
 
 type Props = {
-  bindLogs?: boolean;
   identifier?: string;
   onClose: () => void;
   onFeedbackAdded?: () => void;
@@ -86,7 +84,6 @@ function FeedbackType({
 
 function FeedbackFarmModal(props: Props) {
   const {
-    bindLogs,
     colors,
     identifier: _identifier,
     identifierMode,
@@ -125,12 +122,6 @@ function FeedbackFarmModal(props: Props) {
     strings.textareaPlaceholders.DEFAULT
   );
 
-  useEffect(() => {
-    if (bindLogs) {
-      BindLogs();
-    }
-  }, [bindLogs]);
-
   function handleSubmitForm(e: any) {
     e.preventDefault();
   }
@@ -156,9 +147,7 @@ function FeedbackFarmModal(props: Props) {
         feedbackText,
         selectedType,
         identifier,
-        undefined,
-        // @ts-ignore
-        bindLogs ? console.everything : []
+        undefined
       );
       setStep('conclusion');
       setFeedbackText('');
