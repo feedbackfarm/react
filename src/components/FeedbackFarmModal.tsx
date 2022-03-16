@@ -239,6 +239,7 @@ function FeedbackFarmModal(props: Props) {
                 style={{
                   borderColor: textAreaBorderColor,
                   color: textColor,
+                  fontSize: 12,
                 }}
                 value={identifier}
                 onChange={handleOnIdentifierChange}
