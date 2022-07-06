@@ -43,6 +43,7 @@ type Props = {
   colors: Colors;
   identifierMode?: IdentifierMode;
   strings?: Strings;
+  whiteLabel: boolean;
 };
 
 function FeedbackType({
@@ -90,6 +91,7 @@ function FeedbackFarmModal(props: Props) {
     onClose,
     onFeedbackAdded,
     projectId,
+    whiteLabel,
   } = props;
   const [feedbackText, setFeedbackText] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -268,19 +270,21 @@ function FeedbackFarmModal(props: Props) {
             </span>
           </button>
         </div>
-        <span
-          className={classes.feedbackFarmModalPoweredBy}
-          style={{ color: textColor }}
-        >
-          {strings.poweredBy}
-          <a
-            className={classes.feedbackFarmModalPoweredByLink}
-            href="https://feedback.farm?ref=widget"
-            target="_blank"
+        {!whiteLabel && (
+          <span
+            className={classes.feedbackFarmModalPoweredBy}
+            style={{ color: textColor }}
           >
-            feedback.farm
-          </a>
-        </span>
+            {strings.poweredBy}
+            <a
+              className={classes.feedbackFarmModalPoweredByLink}
+              href="https://feedback.farm?ref=widget"
+              target="_blank"
+            >
+              feedback.farm
+            </a>
+          </span>
+        )}
       </div>
     );
   }

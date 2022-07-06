@@ -35,6 +35,7 @@ type Props = {
   strings?: Strings;
   theme?: 'light' | 'dark';
   placement?: Placement;
+  whiteLabel?: boolean;
 };
 
 // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
@@ -94,6 +95,7 @@ function FeedbackFarmWrapper(props: Props) {
     stayOpen,
     strings,
     theme,
+    whiteLabel,
   } = props;
   const [isModalVisible, setIsModalVisible] = useState(!!stayOpen);
   const [referenceElement, setReferenceElement] = useState(null);
@@ -154,6 +156,7 @@ function FeedbackFarmWrapper(props: Props) {
                     : defaultColors),
                   ...colors,
                 }}
+                whiteLabel={!!whiteLabel}
               />
             </div>
           </div>
