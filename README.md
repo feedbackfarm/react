@@ -1,3 +1,4 @@
+This package has been archived. Use this one instead: https://github.com/feedbackfarm/widget/tree/main/packages/react
 # @feedbackfarm/react
 
 Feedback Farm widget
